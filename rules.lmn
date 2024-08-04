@@ -1,0 +1,55 @@
+// red{+L1,+L2,+L3,+L4,+L5}, hadamard(L1, 1), hadamard(L2, 2), hadamard(L3, 3), hadamard(L4, 4), 5(L5).
+
+//// c // todo: detect legs that do not connected to hadamard-gate
+c_r@@
+red{+L1, $p}, hadamard(L1, H)
+  :- redhad{+H, $p}.
+{
+  system_ruleset. '$callback'(zerostep).
+  c_r_1@@
+  redhad{+L1, $p}, hadamard(L1, H1)
+    :- redhad{+H1, $p}.
+  c_r_2@@
+  redhad{$p}
+    :- green{$p}.
+}.
+
+//// s1
+s1_red@@
+red{+L1, p(P1), $p1}, red{+L1, p(P2), $p2} :- P=P1+P2 | red{p(P),$p1,$p2}.
+s1_green@@
+green{+L1, p(P1), $p1}, green{+L1, p(P2), $p2} :- P=P1+P2 | green{p(P),$p1,$p2}.
+
+// test
+// red{+L1,+L2,+L3,+L4, p(30)}, red{+L1,+L2,+L5,+L6, p(30)}, [L3,L4,L5,L6].
+
+//// k1
+k1_red@@
+red{+R, +G, p(180)}, green{+G, p(P), $p}
+  :- PP = -P | green_k1{r(R), p(PP), $p}.
+k1_green@@
+green{+R, +G, p(180)}, red{+G, p(P), $p}
+  :- PP = -P | red_k1{r(R), p(PP), $p}.
+
+// test
+red{+R, +G, p(180)}, green{+G,p(0),+L1,+L2,+L3}, [R],[L1,L2,L3].
+// green{+R, +G, p(180)}, red{+G,p(0),+L1,+L2,+L3}, [R],[L1,L2,L3].
+
+{
+  system_ruleset. '$callback'(zerostep).
+
+  // delete +'+' after s1
+  red{+'+', $p} :- red{$p}.
+  green{+'+', $p} :- green{$p}.
+
+  // after k1
+  k1_inc@@ green_k1{r(R), +L, $p} :- green_inc{r(R), o(L), $p}.
+  inc_inc@@ green_inc{r(R), +L, $p} :- green_inc{r(R), o(L), $p}.
+  inc_dec@@ green_inc{r(L0), o(L), $p} :- green_dec{r(L0), +M, $p}, red{+M, +L, p(180)}.
+  back_green@@ green_dec{r(L0), o(L), $p}:- green{r(L0), +M, $p}, red{+M, +L, p(180)}.
+  k1_inc@@ red_k1{r(R), +L, $p} :- red_inc{r(R), o(L), $p}.
+  inc_inc@@ red_inc{r(R), +L, $p} :- red_inc{r(R), o(L), $p}.
+  inc_dec@@ red_inc{r(L0), o(L), $p} :- red_dec{r(L0), +M, $p}, green{+M, +L, p(180)}.
+  back_green@@ red_dec{r(L0), o(L), $p}:- red_dec{r(L0), +M, $p}, green{+M, +L, p(180)}.
+  r(I) :- +I.
+}.

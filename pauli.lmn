@@ -1,0 +1,44 @@
+//// line 1
+i1(I1), red{+I1, +G1, p(180)}, green{+G1, +R1, +G2, p(0)}, green{+G2, +O1, +R2, p(0)}, o1(O1),
+//// line 2
+i2(I2), green{+I2, +R3, p(180)}, red{+R3, +R1, +G3, p(0)}, green{+G3, +R4, p(90)}, red{+R4, +O2, +R2, p(0)}, o2(O2).
+
+//// f
+f_red@@
+red{+L1, p(P1), $p1}, red{+L1, p(P2), $p2} :- P=P1+P2 | red{p(P),$p1,$p2}.
+f_green@@
+green{+L1, p(P1), $p1}, green{+L1, p(P2), $p2} :- P=P1+P2 | green{p(P),$p1,$p2}.
+f_sw_red@@
+red{+L1, +L2, p(P1)}, red{+L2, +L3, p(P2), $r} :- int(P1), int(P2) | red{+L1, +L2, p(P2), $r}, red{+L2, +L3, p(P1)}.
+f_sw_green@@
+green{+L1, +L2, p(P1)}, green{+L2, +L3, p(P2), $r} :- int(P1), int(P2) | green{+L1, +L2, p(P2), $r}, green{+L2, +L3, p(P1)}.
+
+//// id
+id_red@@ red{+L1, +L2, p(0)} :- L1=L2.
+id_green@@ green{+L1, +L2, p(0)} :- L1=L2.
+
+//// pi
+pi_green_2@@
+red{+L1, +L2, p(180)}, green{+L2, +C, p(P)}
+	:- PP=-P | green{+L1, +R, p(PP)}, red{+R, +C, p(180)}.
+pi_red_2@@
+green{+L1, +L2, p(180)}, red{+L2, +C, p(P)}
+	:- PP=-P | red{+L1, +R, p(PP)}, green{+R, +C, p(180)}.
+pi_green_3@@
+red{+L1, +L2, p(180)}, green{+L2, +C1, +C2, p(P)}
+	:- PP=-P | green{+L1, +R1, +R2, p(PP)}, red{+R1, +C1, p(180)}, red{+R2, +C2, p(180)}.
+pi_red_3@@
+green{+L1, +L2, p(180)}, red{+L2, +C1, +C2, p(P)}
+	:- PP=-P | red{+L1, +R1, +R2, p(PP)}, green{+R1, +C1, p(180)}, green{+R2, +C2, p(180)}.
+
+{
+  system_ruleset. '$callback'(zerostep).
+
+  // delete +'+' after f
+  red{+'+', $p} :- red{$p}.
+  green{+'+', $p} :- green{$p}.
+  
+  // phase
+  phase_red_360@@ red{$p, p(P)} :- P >= 360, PP=P-360 | red{$p, p(PP)}.
+  phase_green_360@@ green{$p, p(P)} :- P >= 360, PP=P-360 | green{$p, p(PP)}.
+}.

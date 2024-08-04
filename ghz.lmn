@@ -1,0 +1,17 @@
+/// line 1
+{p(0), +R1, c(1)}, {p(0), +R1, +O1, +G1, c(1)}, o1(O1),
+/// line 2
+{p(0), +H, c(1)}, hadamard(H, G2), {p(0), +G1, +G2, +G3, c(-1)}, {p(0), +G3, +R2, +O2, c(-1)}, o2(O2),
+/// line 3
+{p(0), +R3, c(1)}, {p(0), +R2, +R3, +O3, c(1)}, o3(O3).
+
+f@@ {+L1, p(P1), $p1, c(C1)}, {+L1, p(P2), $p2, c(C2)} :- P=P1+P2, int(C1), int(C2), C1==C2 | {p(P), $p1, $p2, c(C2)}.
+
+id@@ {+L1, +L2, p(0), c(C)} :- int(C) | L1=L2.
+
+h_1@@ {p($p), +L1, c(C)}, hadamard(L1, L) :- int(C) | {+L, p($p), c(-C)}.
+
+{
+  system_ruleset. '$callback'(zerostep).
+  {+'+', $p} :- {$p}. // delete +'+' after f
+}.

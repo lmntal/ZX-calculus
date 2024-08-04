@@ -1,0 +1,20 @@
+in=[I1,I2], out=[O1,O2].
+cnot(in(I1,I2), out(C1,C2)), cnot(in(C1,C2), out(O1,O2)).
+// cnot(in(I1,I2), out(C1,C2)), cnot(in(C11,C12), out(C1,C2)), cnot(in(C11,C12), out(O1,O2)).
+
+gen_cnot1@@ cnot(in(I1, I2), out(O1, O2)) :- green{in(I1), out(O1), out(R), phase(0)}, red{in(R), in(I2), out(O2), phase(0)}.
+gen_cnot2@@ cnot(in(I1, I2), out(O1, O2)) :- red{in(I1), out(O1), out(R), phase(0)}, green{in(R), in(I2), out(O2), phase(0)}.
+
+// in2out@@ in(I) :- out(I).
+// out2in@@ out(I) :- in(I).
+
+s1_red@@ red{in(X), $p, phase(P1)}, red{out(X), $q, phase(P2)} :- P=P1+P2 | red{$p, $q, p(P)}.
+s1_green@@ green{in(X), $p, phase(P1)}, green{out(X), $q, phase(P2)} :- P=P1+P2 | green{$p, $q, p(P)}.
+
+b_dash_1@@ green{in(X), $p}, red{out(X), $q} :- green{$p}, red{$q}.
+b_dash_2@@ green{out(X), $p}, red{in(X), $q} :- green{$p}, red{$q}.
+
+unit_red@@ red{in(I), out(O), phase(0)} :- I=O.
+unit_green@@ green{in(I), out(O), phase(0)} :- I=O.
+
+// red{phase(0). in(L6). in(L9). out(L7). }, red{phase(0). in(L4). in(L5). out(L3). }, red{phase(0). in(L2). in(L6). out(L3). }.
