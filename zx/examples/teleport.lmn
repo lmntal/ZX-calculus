@@ -24,4 +24,4 @@ gre_gre@@ green{$p, phase(80), in(L2)}, green{phase(0), $q, out(L2)} :- green{ph
 	green{in(I), in, $p} :- green{in(I), $p}.
 	red{out(I), out, $p} :- red{out(I), $p}.
 	red{in(I), in, $p} :- red{in(I), $p}.
-}
+}.
