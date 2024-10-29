@@ -1,55 +1,64 @@
-// red{+L1,+L2,+L3,+L4,+L5}, hadamard(L1, 1), hadamard(L2, 2), hadamard(L3, 3), hadamard(L4, 4), 5(L5).
+f@@ {+L1,e^i(A),$p1,c(C1)}, {+L1,e^i(B),$p2,c(C2)}
+  :- int(A), int(B), AplusB=A+B, int(C1), int(C2), C1*C2=:=1 |
+  f{e^i(AplusB),$p1,$p2}.
+// test. {+L1,+L2,+L3,+L4,e^i(120),c(1)}, {+L1,+L2,+L3,+L4,e^i(30),c(1)}.
+// test. {+L1,+L2,+L3,+L4,e^i(120),c(1)}, {+L1,+L2,+L3,+L4,e^i(30),c(-1)}.
+id@@  {+L1,+L2,e^i(0),c(C)} :- int(C), C*C=:=1 | L1=L2.
+// test. {+L1,+L2,e^i(0),c(1)}, l1(L1), l2(L2).
+hh@@  h{+L1,+L2,e^i(180)}, h{+L2,+L3,e^i(180)} :- L1=L3.
+// test. h{+L1,+L2,e^i(180)}, h{+L2,+L3,e^i(180)}. l1(L1), l3(L3).
+h_a@@ {e^i(A),c(C),$p} :- int(A), int(C) | hr{{e^i(A),c(C),$p}, legs{}, hs{}}.
+h_b@@ hr{{e^i(A),c(C),+L1,$p}, legs{$l}, hs{}}
+  :- int(A), int(C) | hr{{e^i(A),c(C),$p}, legs{+L1,$l}, hs{}}.
+h_c@@ hr{{e^i(A),c(C)}, legs{+L,$l}, hs{$hs}}, h{+L,e^i(180),$hh}
+  :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{$l}, hs{+L,$hs}}, h{+L,e^i(180),$hh}.
+h_nc@@ hr{{e^i(A),c(C)}, legs{+L,$l}, hs{$hs}}
+  :- int(A), int(C) | {e^i(A),c(C),+L,$l,$hs}.
+h_cc@@ hr{{e^i(A),c(C)}, legs{}, hs{+H,$hs}}, h{+H,+HH,e^i(180)}
+  :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{}, hs{$hs}, removed{+HH}}.
+h_cc@@ hr{{e^i(A),c(C)}, legs{}, hs{+H,$hs}, removed{$r}}, h{+H,+HH,e^i(180)}
+  :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{}, hs{$hs}, removed{+HH,$r}}.
+h_cce@@ hr{{e^i(A),c(C)}, legs{}, hs{}, removed{$r}}
+  :- int(A), int(C) | {e^i(A),c(C),$r}.
+// test. {e^i(120),c(1),+L1,+L2,+L3}, h{+L1,+O1,e^i(180)}, h{+L2,+O2,e^i(180)}, [O1,O2,L3].
+// test. {e^i(120),c(1),+L1,+L2,+L3}, h{+L1,+O1,e^i(180)}, h{+L2,+O2,e^i(180)}, h{+L3,+O3,e^i(180)}, [O1,O2,O3].
+pi_a@@ {+L1,e^i(180),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}
+  :- int(A), int(C1), int(C2), C1*C2=:=-1 | pi{a{+L2,e^i(-A),c(C2)}, $p}.
+pi_b@@ pi{a{+L1,e^i(A),c(C),$s}, +L2, $p}
+  :- int(A), int(C), CC=-C | pi{a{+L1,+L3,e^i(A),c(C),$s}, $p}, {+L2,+L3,e^i(180),c(CC)}.
+pi_c@@ pi{a{$s}} :- {$s}.
+// test. {+L1,e^i(180),c(1)}, {+L1,+L2,+L3,+L4,e^i(120),c(-1)}, l2(L2),l3(L3),l4(L4).
+c_a@@ {+L1,e^i(0),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}
+  :- int(A), int(C1), int(C2), C1*C2=:=-1 | c{{+L1,e^i(0),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}}.
+c_b@@ c{{+L1,e^i(0),c(C1)}, {+L1,+L2,+L3,e^i(A),c(C2),$p}, $q}
+  :- int(A), int(C1), int(C2) | c{{+L1,e^i(0),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}, {+L3,e^i(0),c(C1)}, $q}.
+c_c@@ c{{+L1,e^i(0),c(C1)}, {+L1,+L2,e^i(A),c(C2)}, $q} :- int(A), int(C1), int(C2) | {+L2,e^i(0),c(C1)}, $q.
+// test. {+L1,e^i(0),c(1)}, {+L1,+L2,+L3,+L4,e^i(120),c(-1)}, [L2,L3,L4].
+// test. {+L1,e^i(0),c(-1)}, {+L1,+L2,+L3,+L4,e^i(120),c(1)}, [L2,L3,L4].
+// test. {+L1,e^i(0),c(1)}, {+L1,+L2,e^i(120),c(-1)}, [L2].
+b_a@@ {+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, b_time(B)
+  :- int(B), B>0, BB=B-1 | b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}}, b_time(BB).
+b_b@@ b{{+L1,+L2,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}}
+  :- b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, red{{+L2,e^i(0),c(-1)}}}.
+b_c@@ b{{+L1,+L2,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, red{$r}}
+  :- b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, red{{+L2,e^i(0),c(-1)},$r}}.
+b_d@@ b{{+L,e^i(0),c(1)}, {+L,+R,e^i(0),c(-1),$p2}, red{$r}}
+  :- b{{e^i(0),c(-1),$p2}, red{$r}, white{{+R,e^i(0),c(1)}}}.
+b_e@@ b{{+R,e^i(0),c(-1),$p2}, red{$r}, white{$w}}
+  :- b{{e^i(0),c(-1),$p2}, red{$r}, white{{+R,e^i(0),c(1)},$w}}.
+b_f@@ b{{e^i(0),c(-1)}, red{$r}, white{$w}} :- b{red{$r}, white{$w}}.
+b_g@@ b{red{{+R,e^i(0),c(-1)},$r}, white{$w}}
+  :- b{red{$r}, white{$w}, {+R,e^i(0),c(-1)}, white{to}, bg{}}.
+b_h@@ b{red{$r}, white{{e^i(0),c(1),$pw},$w}, {+R,e^i(0),c(-1),$pr}, white{$ww,to}, bg{$bg}}
+  :- b{red{$r}, white{$w}, {+W,+R,e^i(0),c(-1),$pr}, white{{+W,e^i(0),c(1),$pw},$ww,to}, bg{$bg}}.
+b_i@@ b{red{{+R,e^i(0),c(-1)},$r}, white{$w,to}, white{}, bg{$bg}, {e^i(0),c(-1),$pr}}
+  :- b{red{$r}, {+R,e^i(0),c(-1)}, white{$w}, white{to}, bg{{e^i(0),c(-1),$pr},$bg}}.
+b_j@@ b{red{}, white{$w,to}, white{}, bg{$bg}, $q} :- $w, $bg, $q.
+// test. b_time(1), {+L1,+I1,+I2,+I3,e^i(0),c(-1)}, {+L1,+O1,+O2,+O3,e^i(0),c(1)}, i1(I1), i2(I2), i3(I3), o1(O1), o2(O2), o3(O3).
+// test. b_time(1), {+L1,+I1,e^i(0),c(-1)}, {+L1,+O1,e^i(0),c(1)}, i1(I1), o1(O1).
 
-//// c // todo: detect legs that do not connected to hadamard-gate
-c_r@@
-red{+L1, $p}, hadamard(L1, H)
-  :- redhad{+H, $p}.
 {
   system_ruleset. '$callback'(zerostep).
-  c_r_1@@
-  redhad{+L1, $p}, hadamard(L1, H1)
-    :- redhad{+H1, $p}.
-  c_r_2@@
-  redhad{$p}
-    :- green{$p}.
-}.
-
-//// s1
-s1_red@@
-red{+L1, p(P1), $p1}, red{+L1, p(P2), $p2} :- P=P1+P2 | red{p(P),$p1,$p2}.
-s1_green@@
-green{+L1, p(P1), $p1}, green{+L1, p(P2), $p2} :- P=P1+P2 | green{p(P),$p1,$p2}.
-
-// test
-// red{+L1,+L2,+L3,+L4, p(30)}, red{+L1,+L2,+L5,+L6, p(30)}, [L3,L4,L5,L6].
-
-//// k1
-k1_red@@
-red{+R, +G, p(180)}, green{+G, p(P), $p}
-  :- PP = -P | green_k1{r(R), p(PP), $p}.
-k1_green@@
-green{+R, +G, p(180)}, red{+G, p(P), $p}
-  :- PP = -P | red_k1{r(R), p(PP), $p}.
-
-// test
-red{+R, +G, p(180)}, green{+G,p(0),+L1,+L2,+L3}, [R],[L1,L2,L3].
-// green{+R, +G, p(180)}, red{+G,p(0),+L1,+L2,+L3}, [R],[L1,L2,L3].
-
-{
-  system_ruleset. '$callback'(zerostep).
-
-  // delete +'+' after s1
-  red{+'+', $p} :- red{$p}.
-  green{+'+', $p} :- green{$p}.
-
-  // after k1
-  k1_inc@@ green_k1{r(R), +L, $p} :- green_inc{r(R), o(L), $p}.
-  inc_inc@@ green_inc{r(R), +L, $p} :- green_inc{r(R), o(L), $p}.
-  inc_dec@@ green_inc{r(L0), o(L), $p} :- green_dec{r(L0), +M, $p}, red{+M, +L, p(180)}.
-  back_green@@ green_dec{r(L0), o(L), $p}:- green{r(L0), +M, $p}, red{+M, +L, p(180)}.
-  k1_inc@@ red_k1{r(R), +L, $p} :- red_inc{r(R), o(L), $p}.
-  inc_inc@@ red_inc{r(R), +L, $p} :- red_inc{r(R), o(L), $p}.
-  inc_dec@@ red_inc{r(L0), o(L), $p} :- red_dec{r(L0), +M, $p}, green{+M, +L, p(180)}.
-  back_green@@ red_dec{r(L0), o(L), $p}:- red_dec{r(L0), +M, $p}, green{+M, +L, p(180)}.
-  r(I) :- +I.
+  f{+'+', $p} :- f{$p}. f{$p} :- {$p}.
+  b_time(0) :- .
 }.
