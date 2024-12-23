@@ -1,27 +1,5 @@
-alice{
-	cnot(in(input, I2), out(Ga, H)),
-	hadamard(H, Gb),
-	green{in(Ga), out(), phase(80)},
-	green{in(Gb), out(), phase(100)}.
-}.
-
-bob{
-	cap(I2, output).
-}.
-
-system_ruleset.
-
-gen_cnot@@ cnot(in(I1, I2), out(O1, O2)) :- green{in(I1), out(O1), out(R), phase(0)}, red{in(R), in(I2), out(O2), phase(0)}.
-reduce_cap@@ cap(In, Out) :- In=Out.
-hada_gre@@ green{$p[X1|*X]}, hadamard(Y, X1) :- red{$p[Y|*X]}.
-red_red@@ red{$p, phase(100), in(L4)}, red{phase(0), out(L4), $q} :- red{$p, $q, phase(100+0)}.
-gre_gre@@ green{$p, phase(80), in(L2)}, green{phase(0), $q, out(L2)} :- green{phase(0+80), $q, $p}.
-
-
-{
-	'$callback'(zerostep).
-	green{out(I), out, $p} :- green{out(I), $p}.
-	green{in(I), in, $p} :- green{in(I), $p}.
-	red{out(I), out, $p} :- red{out(I), $p}.
-	red{in(I), in, $p} :- red{in(I), $p}.
-}.
+// teleportation circuit
+in(I), out(O),
+{+I,+XX1,+ZX1,e^i(0),c(-1)}, {+XX1,e^i(180),c(-1)},
+{+ZX1,+ZH1,+ZZ1,e^i(0),c(1)}, h{+ZH1,+XH1,e^i(180)}, {+XH1,e^i(180),c(-1)},
+{+ZZ1,+ZX2,e^i(180),c(1)}, {+ZX2,+O,e^i(180),c(-1)}.
