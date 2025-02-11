@@ -1,0 +1,13 @@
+% trying to implement a local comp rule
+% notがほしくて、QLMNtalないとかけないと思います
+
+lc_a@@ {+L,+L1,e^i(0),$p1,c(1)}, {+L1,+L2,e^i(-90),c(-1)}, {+L,e^i(0),$p2,c(1)}
+  :- lc{t{+L,+L1,e^i(0),$p1,c(1)}, adj{{+L,e^i(0),$p2,c(1)}}, tmp{}, fin{}}, {+L1,+L2,e^i(-90),c(-1)}.
+lc_b@@ lc{t{+L,e^i(0),$p1,c(1)}, adj{$q}, tmp{}, fin{}}, {+L,e^i(0),$p2,c(1)}
+  :- lc{t{+L,e^i(0),$p1,c(1)}, adj{{+L,e^i(0),$p2,c(1)}, $q}, tmp{}, fin{}}.
+lc_c@@ lc{t{+L,e^i(0),c(1)}, adj{{+L,e^i(0),$p2,c(1)}, $q}, tmp{}, fin{$f}}
+  :- lc{t{+L,e^i(0),c(1)}, adj{$q}, tmp{}, fin{$f}, {+L,e^i(0),$p2,c(1)}}.
+lc_link@@ lc{t{+L,e^i(0),c(1)}, adj{{e^i(0),$p,c(1)}, $q}, tmp{$t}, fin{$f}, {e^i(0),$p2,c(1)}}
+  :- lc{t{+L,e^i(0),c(1)}, adj{$q}, tmp{{+LL,e^i(0),$p,c(1)}, $t}, fin{$f}, {+LL,e^i(0),$p2,c(1)}}.
+lc_unlink@@ lc{t{+L,e^i(0),c(1)}, adj{}, tmp{$t}, fin{$f}, {e^i(0),$p2,c(1)}}
+  :- lc{t{+L,e^i(0),c(1)}, adj{}, tmp{$t}, fin{$f}, {e^i(0),$p2,c(1)}}.

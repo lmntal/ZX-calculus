@@ -1,2 +1,2 @@
-test.lmn
+test[0-9]*
 *.il

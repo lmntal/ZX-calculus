@@ -1,0 +1,31 @@
+// color change rule (H-rule)
+
+// test. {e^i(120),c(1),+L1,+L2,+L3}, h{+L1,+O1,e^i(180)}, h{+L2,+O2,e^i(180)}, {+O1,+O2,+L3}.
+% test. {e^i(120),c(1),+L1,+L2,+L3}, h{+L1,+O1,e^i(180)}, h{+L2,+O2,e^i(180)}, h{+L3,+O3,e^i(180)}, {+O1,+O2,+O3}.
+
+// impl1
+// h_a@@ {e^i(A),c(C),$p} :- int(A), int(C) | hr{{e^i(A),c(C),$p}, legs{}}.
+// h_b@@ hr{{e^i(A),c(C),+L,$p}, legs{}, $q}
+//   :- int(A), int(C) | hr{{e^i(A),c(C),$p}, +L, legs{}, $q}.
+// h_h@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, h{+L,e^i(180),+O}
+//   :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+L,$l}, $q}, L=O.
+// h_nh@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, {+L,$o}
+//   :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, {+L,$o}.
+// h_nh_hr@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, hr{+L,$o}
+//   :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, hr{+L,$o}.
+// h_e@@ hr{{e^i(A),c(C)}, legs{$l}}
+//   :- int(A), int(C), CC=-C | {e^i(A),c(CC),$l}.
+
+// impl2
+h_a@@ {+L,e^i(A),c(C),$p}, h{+L,+O,e^i(180)}
+  :- int(A), int(C) | hr{{+L,e^i(A),c(C),$p}, legs{}}, h{+L,+O,e^i(180)}.
+h_b@@ hr{{e^i(A),c(C),+L,$p}, legs{}, $q}
+  :- int(A), int(C) | hr{{e^i(A),c(C),$p}, +L, legs{}, $q}.
+h_delete_h@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, h{+L,e^i(180),+O}
+  :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+L,$l}, $q}, L=O.
+h_no_h@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, {+L,$o}
+  :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, {+L,$o}.
+h_no_h_hr@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, hr{+L,$o}
+  :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, hr{+L,$o}.
+h_end@@ hr{{e^i(A),c(C)}, legs{$l}}
+  :- int(A), int(C), CC=-C | {e^i(A),c(CC),$l}.

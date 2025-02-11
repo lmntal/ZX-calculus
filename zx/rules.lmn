@@ -8,9 +8,13 @@ f_hoph@@ {+L1,+L2,e^i(A),$p1,c(C1)}, {+L1,+L2,e^i(B),$p2,c(C2)}
   {e^i(A),$p1,c(C1)}, {e^i(B),$p2,c(C2)}.
 // test. {+L1,+L2,+L3,+L4,e^i(120),c(1)}, {+L1,+L2,+L3,+L4,e^i(30),c(1)}.
 // test. {+L1,+L2,+L3,+L4,e^i(120),c(1)}, {+L1,+L2,+L3,+L4,e^i(30),c(-1)}.
-id@@  {+L1,+L2,e^i(0),c(C)} :- int(C), C*C=:=1 | L1=L2.
+id@@ {+L1,+L2,e^i(0),c(C)} :- int(C), C*C=:=1 | L1=L2.
 // test. {+L1,+L2,e^i(0),c(1)}, l1(L1), l2(L2).
-hh@@  h{+L1,+L2,e^i(180)}, h{+L2,+L3,e^i(180)} :- L1=L3.
+idgen_g@@ {+L1,$p1}, {+L2,$p2}, idgen_g(N)
+  :- int(N), N>0, NN=N-1 | {+L1,+LL1,$p1}, {+L2,+LL2,$p2}, {+LL1,+LL2,e^i(0),c(1)}, id_gen(NN).
+idgen_r@@ {+L1,$p1}, {+L2,$p2}, idgen_r(N)
+  :- int(N), N>0, NN=N-1 | {+L1,+LL1,$p1}, {+L2,+LL2,$p2}, {+LL1,+LL2,e^i(0),c(-1)}, id_gen(NN).
+hh@@ h{+L1,+L2,e^i(180)}, h{+L2,+L3,e^i(180)} :- L1=L3.
 // test. h{+L1,+L2,e^i(180)}, h{+L2,+L3,e^i(180)}. l1(L1), l3(L3).
 h_a@@ {+L,e^i(A),c(C),$p}, h{+L,+O,e^i(180)}
   :- int(A), int(C) | hr{{+L,e^i(A),c(C),$p}, legs{}}, h{+L,+O,e^i(180)}.
@@ -69,3 +73,9 @@ b_j@@ b{red{}, white{$w,to}, white{}, bg{$bg}, $q} :- $w, $bg, $q.
   f{+'+', $p} :- f{$p}. f{$p} :- {$p}.
   b_times(0) :- .
 }.
+
+// teleportation circuit
+{+I}, {+O},
+{+I,+XX1,+ZX1,e^i(0),c(-1)}, {+XX1,e^i(180),c(-1)},
+{+ZX1,+ZH1,+ZZ1,e^i(0),c(1)}, h{+ZH1,+XH1,e^i(180)}, {+XH1,e^i(180),c(-1)},
+{+ZZ1,+ZX2,e^i(180),c(1)}, {+ZX2,+O,e^i(180),c(-1)}.

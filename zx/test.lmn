@@ -1,0 +1,33 @@
+h_a@@ {e^i(A),c(C),$p} :- int(A), int(C) | hr{{e^i(A),c(C),$p}, legs{}, hs{}}.
+h_b@@ hr{{e^i(A),c(C),+L1,$p}, legs{$l}, hs{}}
+  :- int(A), int(C) | hr{{e^i(A),c(C),$p}, legs{+L1,$l}, hs{}}.
+h_c@@ hr{{e^i(A),c(C)}, legs{+L,$l}, hs{$hs}}, h{+L,e^i(180),$hh}
+  :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{$l}, hs{+L,$hs}}, h{+L,e^i(180),$hh}.
+h_nc@@ hr{{e^i(A),c(C)}, legs{+L,$l}, hs{$hs}}
+  :- int(A), int(C) | {e^i(A),c(C),+L,$l,$hs}.
+h_cc@@ hr{{e^i(A),c(C)}, legs{}, hs{+H,$hs}}, h{+H,+HH,e^i(180)}
+  :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{}, hs{$hs}, removed{+HH}}.
+h_cc@@ hr{{e^i(A),c(C)}, legs{}, hs{+H,$hs}, removed{$r}}, h{+H,+HH,e^i(180)}
+  :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{}, hs{$hs}, removed{+HH,$r}}.
+h_cce@@ hr{{e^i(A),c(C)}, legs{}, hs{}, removed{$r}}
+  :- int(A), int(C) | {e^i(A),c(C),$r}.
+
+// h_a@@ {+L,e^i(A),c(-1),$p}, h{+L,+O,e^i(180)}
+//   :- int(A) | hr{{+L,e^i(A),c(-1),$p}, legs{}}, h{+L,+O,e^i(180)}.
+// h_b@@ hr{{e^i(A),c(C),+L,$p}, legs{}, $q}
+//   :- int(A), int(C) | hr{{e^i(A),c(C),$p}, +L, legs{}, $q}.
+// h_delete_h@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, h{+L,e^i(180),+O}
+//   :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+L,$l}, $q}, L=O.
+// h_no_h@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, {+L,$o}
+//   :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, {+L,$o}.
+// h_no_h_hr@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, hr{+L,$o}
+//   :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, hr{+L,$o}.
+// h_end@@ hr{{e^i(A),c(C)}, legs{$l}}
+//   :- int(A), int(C), CC=-C | {e^i(A),c(CC),$l}.
+{
+  system_ruleset. '$callback'(zerostep).
+  f{+'+', $p} :- f{$p}. f{$p} :- {$p}.
+}.
+
+// test. h_on. {e^i(120),c(1),+L1,+L2,+L3}, h{+L1,+O1,e^i(180)}, h{+L2,+O2,e^i(180)}, {+O1,+O2,+L3}.
+test. h_on. {e^i(120),c(-1),+L1,+L2,+L3}, h{+L1,+O1,e^i(180)}, h{+L2,+O2,e^i(180)}, h{+L3,+O3,e^i(180)}, {+O1,+O2,+O3}.
