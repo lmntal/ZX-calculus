@@ -27,14 +27,14 @@ h_no_h@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, {+L,$o}
 h_no_h_hr@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, hr{+L,$o}
   :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, hr{+L,$o}.
 h_end@@ hr{{e^i(A),c(C)}, legs{$l}}
-  :- int(A), int(C), CC=-C | {e^i(A),c(CC),$l}.
+  :- int(A), int(C), CC=:=-C | {e^i(A),c(CC),$l}.
 // test. h_on. {e^i(120),c(1),+L1,+L2,+L3}, h{+L1,+O1,e^i(180)}, h{+L2,+O2,e^i(180)}, {+O1,+O2,+L3}.
 // test. h_on. {e^i(120),c(1),+L1,+L2,+L3}, h{+L1,+O1,e^i(180)}, h{+L2,+O2,e^i(180)}, h{+L3,+O3,e^i(180)}, {+O1,+O2,+O3}.
 pi_a@@ {+L,+L1,e^i(180),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}, pi_times(P)
-        :- int(A), int(C1), int(C2), int(P), C1*C2=:=-1, AA=-A, P>0, PP=P-1 |
+        :- int(A), int(C1), int(C2), int(P), C1*C2=:=-1, AA=:=-A, P>0, PP=P-1 |
           pi{in(L),a{e^i(AA),c(C2)}, +L2, $p}, pi_times(PP).
 pi_b@@ pi{in(L),a{e^i(A),c(C),$s}, +L2, $p}
-  :- int(A), int(C), CC=-C | pi{in(L),a{+L3,e^i(A),c(C),$s}, $p}, {+L2,+L3,e^i(180),c(CC)}.
+  :- int(A), int(C), CC=:=-C | pi{in(L),a{+L3,e^i(A),c(C),$s}, $p}, {+L2,+L3,e^i(180),c(CC)}.
 pi_c@@ pi{in(L),a{$s}} :- {+L,$s}.
 // test. in(L), {+L,+L1,e^i(180),c(1)}, {+L1,+L2,+L3,+L4,e^i(120),c(-1)}, l2(L2),l3(L3),l4(L4), pi_times(1).
 c_a@@ {+L1,e^i(0),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}
@@ -73,9 +73,3 @@ b_j@@ b{red{}, white{$w,to}, white{}, bg{$bg}, $q} :- $w, $bg, $q.
   f{+'+', $p} :- f{$p}. f{$p} :- {$p}.
   b_times(0) :- .
 }.
-
-// teleportation circuit
-{+I}, {+O},
-{+I,+XX1,+ZX1,e^i(0),c(-1)}, {+XX1,e^i(180),c(-1)},
-{+ZX1,+ZH1,+ZZ1,e^i(0),c(1)}, h{+ZH1,+XH1,e^i(180)}, {+XH1,e^i(180),c(-1)},
-{+ZZ1,+ZX2,e^i(180),c(1)}, {+ZX2,+O,e^i(180),c(-1)}.
