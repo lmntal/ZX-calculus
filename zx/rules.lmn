@@ -1,23 +1,31 @@
-% --bfs --limited-step=5
+//// All ZX-calculus basic rules
 
+// spider fusion
 f@@ {+L1,e^i(A),$p1,c(C1)}, {+L1,e^i(B),$p2,c(C2)}
   :- int(A), int(B), AplusB=A+B, int(C1), int(C2), C1*C2=:=1 |
-  f{e^i(AplusB mod 360),$p1,$p2,c(C1)}.
-f_hoph@@ {+L1,+L2,e^i(A),$p1,c(C1)}, {+L1,+L2,e^i(B),$p2,c(C2)}
-  :- int(A), int(B), int(C1), int(C2), C1*C2=:=-1 |
-  {e^i(A),$p1,c(C1)}, {e^i(B),$p2,c(C2)}.
-// test. {+L1,+L2,+L3,+L4,e^i(120),c(1)}, {+L1,+L2,+L3,+L4,e^i(30),c(1)}.
-// test. {+L1,+L2,+L3,+L4,e^i(120),c(1)}, {+L1,+L2,+L3,+L4,e^i(30),c(-1)}.
-id@@ {+L1,+L2,e^i(0),c(C)} :- int(C), C*C=:=1 | L1=L2.
-// test. {+L1,+L2,e^i(0),c(1)}, l1(L1), l2(L2).
-idgen_g@@ {+L1,$p1}, {+L2,$p2}, idgen_g(N)
-  :- int(N), N>0, NN=N-1 | {+L1,+LL1,$p1}, {+L2,+LL2,$p2}, {+LL1,+LL2,e^i(0),c(1)}, id_gen(NN).
-idgen_r@@ {+L1,$p1}, {+L2,$p2}, idgen_r(N)
-  :- int(N), N>0, NN=N-1 | {+L1,+LL1,$p1}, {+L2,+LL2,$p2}, {+LL1,+LL2,e^i(0),c(-1)}, id_gen(NN).
+  {e^i(AplusB),$p1,$p2,c(C1)}.
+
+// hopf
+hopf@@ {+L1,+L2,+I1,+O1,e^i(A),c(1)}, {+L1,+L2,+I2,+O2,e^i(B),c(-1)}
+  :- int(A), int(B) | {+I1,+O1,e^i(A),c(1)}, {+I2,+O2,e^i(B),c(-1)}.
+
+// hadamard cancellation
 hh@@ h{+L1,+L2,e^i(180)}, h{+L2,+L3,e^i(180)} :- L1=L3.
-// test. h{+L1,+L2,e^i(180)}, h{+L2,+L3,e^i(180)}. l1(L1), l3(L3).
-h_a@@ {+L,e^i(A),c(C),$p}, h{+L,+O,e^i(180)}
-  :- int(A), int(C) | hr{{+L,e^i(A),c(C),$p}, legs{}}, h{+L,+O,e^i(180)}.
+
+// identity removal
+id@@ {+L1,+L2,e^i(0),c(C)} :- int(C), C*C=:=1 | L1=L2.
+
+// identity generation
+idgen_g@@ {+L1,$p1}, {+L2,$p2}, idgen_g(N)
+  :- int(N), N>0, NN=N-1 | {+L1,+LL1,$p1}, {+L2,+LL2,$p2}, {+LL1,+LL2,e^i(0),c(1)}, idgen_g(NN).
+idgen_r@@ {+L1,$p1}, {+L2,$p2}, idgen_r(N)
+  :- int(N), N>0, NN=N-1 | {+L1,+LL1,$p1}, {+L2,+LL2,$p2}, {+LL1,+LL2,e^i(0),c(-1)}, idgen_r(NN).
+
+// color change
+h@@ {+L,e^i(A),c(C)}, h{+L,+O,e^i(180)}
+  :- int(A), int(C), CC=-C | {+O,e^i(A),c(CC)}. // for n=1
+h_a@@ {+L,+LL,e^i(A),c(C),$p}, h{+L,+O,e^i(180)}
+  :- int(A), int(C) | hr{{+L,+LL,e^i(A),c(C),$p}, legs{}}, h{+L,+O,e^i(180)}.
 h_b@@ hr{{e^i(A),c(C),+L,$p}, legs{}, $q}
   :- int(A), int(C) | hr{{e^i(A),c(C),$p}, +L, legs{}, $q}.
 h_delete_h@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, h{+L,e^i(180),+O}
@@ -27,49 +35,51 @@ h_no_h@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, {+L,$o}
 h_no_h_hr@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, hr{+L,$o}
   :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, hr{+L,$o}.
 h_end@@ hr{{e^i(A),c(C)}, legs{$l}}
-  :- int(A), int(C), CC=:=-C | {e^i(A),c(CC),$l}.
-// test. h_on. {e^i(120),c(1),+L1,+L2,+L3}, h{+L1,+O1,e^i(180)}, h{+L2,+O2,e^i(180)}, {+O1,+O2,+L3}.
-// test. h_on. {e^i(120),c(1),+L1,+L2,+L3}, h{+L1,+O1,e^i(180)}, h{+L2,+O2,e^i(180)}, h{+L3,+O3,e^i(180)}, {+O1,+O2,+O3}.
+  :- int(A), int(C), CC=-C | {e^i(A),c(CC),$l}.
+
+// pi commutation
 pi_a@@ {+L,+L1,e^i(180),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}, pi_times(P)
-        :- int(A), int(C1), int(C2), int(P), C1*C2=:=-1, AA=:=-A, P>0, PP=P-1 |
-          pi{in(L),a{e^i(AA),c(C2)}, +L2, $p}, pi_times(PP).
+  :- int(A), int(C1), int(C2), C1*C2=:=-1, AA=-A, P>0, PP=P-1 |
+  pi{in(L),a{e^i(AA),c(C2)}, +L2, $p}, pi_times(PP).
 pi_b@@ pi{in(L),a{e^i(A),c(C),$s}, +L2, $p}
-  :- int(A), int(C), CC=:=-C | pi{in(L),a{+L3,e^i(A),c(C),$s}, $p}, {+L2,+L3,e^i(180),c(CC)}.
+  :- int(A), int(C), CC=-C | pi{in(L),a{+L3,e^i(A),c(C),$s}, $p}, {+L2,+L3,e^i(180),c(CC)}.
 pi_c@@ pi{in(L),a{$s}} :- {+L,$s}.
-// test. in(L), {+L,+L1,e^i(180),c(1)}, {+L1,+L2,+L3,+L4,e^i(120),c(-1)}, l2(L2),l3(L3),l4(L4), pi_times(1).
+
+// copy
 c_a@@ {+L1,e^i(0),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}
-  :- int(A), int(C1), int(C2), C1*C2=:=-1 | c{{+L1,e^i(0),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}}.
-c_b@@ c{{+L1,e^i(0),c(C1)}, {+L1,+L2,+L3,e^i(A),c(C2),$p}, $q}
-  :- int(A), int(C1), int(C2) | c{{+L1,e^i(0),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}, {+L3,e^i(0),c(C1)}, $q}.
-c_c@@ c{{+L1,e^i(0),c(C1)}, {+L1,+L2,e^i(A),c(C2)}, $q} :- int(A), int(C1), int(C2) | {+L2,e^i(0),c(C1)}, $q.
-// test. {+L1,e^i(0),c(1)}, {+L1,+L2,+L3,+L4,e^i(120),c(-1)}, {+L2,+L3,+L4}.
-// test. {+L1,e^i(0),c(-1)}, {+L1,+L2,+L3,+L4,e^i(120),c(1)}, {+L2,+L3,+L4}.
-// test. {+L1,e^i(0),c(1)}, {+L1,+L2,e^i(120),c(-1)}, {+L2}.
-b@@ {+I,+L,e^i(A1),c(C1)}, {+L,+O,e^i(A2),c(C2)}
-  :- int(A1), int(A2), int(C1), int(C2) | {+O,+L,e^i(A1),c(C1)}, {+L,+I,e^i(A2),c(C2)}.
+  :- int(A), int(C1), int(C2), C1*C2=:=-1 | c{a{+L2,$p},c(C1)}.
+c_b@@ c{a{+L1,$p},c(C1),$q}
+  :- int(C1) | c{{+L1,e^i(0),c(C1)},a{$p},c(C1),$q}.
+c_c@@ c{a{},c(C1),$q} :- int(C1) | $q.
+
+// bialgebra complementation
+b@@ {+I,+L,e^i(A1),c(1)}, {+L,+O,e^i(A2),c(-1)}
+   :- int(A1), int(A2) | {+O,+L,e^i(A1),c(1)}, {+L,+I,e^i(A2),c(-1)}. // for n=1
 b_a@@ {+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, b_times(B)
   :- int(B), B>0, BB=B-1 | b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}}, b_times(BB).
 b_b@@ b{{+L1,+L2,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}}
-  :- b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, red{{+L2,e^i(0),c(-1)}}}.
-b_c@@ b{{+L1,+L2,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, red{$r}}
-  :- b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, red{{+L2,e^i(0),c(-1)},$r}}.
-b_d@@ b{{+L,e^i(0),c(1)}, {+L,+R,e^i(0),c(-1),$p2}, red{$r}}
-  :- b{{e^i(0),c(-1),$p2}, red{$r}, white{{+R,e^i(0),c(1)}}}.
-b_e@@ b{{+R,e^i(0),c(-1),$p2}, red{$r}, white{$w}}
-  :- b{{e^i(0),c(-1),$p2}, red{$r}, white{{+R,e^i(0),c(1)},$w}}.
-b_f@@ b{{e^i(0),c(-1)}, red{$r}, white{$w}} :- b{red{$r}, white{$w}}.
-b_g@@ b{red{{+R,e^i(0),c(-1)},$r}, white{$w}}
-  :- b{red{$r}, white{$w}, {+R,e^i(0),c(-1)}, white{to}, bg{}}.
-b_h@@ b{red{$r}, white{{e^i(0),c(1),$pw},$w}, {+R,e^i(0),c(-1),$pr}, white{$ww,to}, bg{$bg}}
-  :- b{red{$r}, white{$w}, {+W,+R,e^i(0),c(-1),$pr}, white{{+W,e^i(0),c(1),$pw},$ww,to}, bg{$bg}}.
-b_i@@ b{red{{+R,e^i(0),c(-1)},$r}, white{$w,to}, white{}, bg{$bg}, {e^i(0),c(-1),$pr}}
-  :- b{red{$r}, {+R,e^i(0),c(-1)}, white{$w}, white{to}, bg{{e^i(0),c(-1),$pr},$bg}}.
-b_j@@ b{red{}, white{$w,to}, white{}, bg{$bg}, $q} :- $w, $bg, $q.
-// test. b_times(1), {+L1,+I1,+I2,+I3,e^i(0),c(-1)}, {+L1,+O1,+O2,+O3,e^i(0),c(1)}, i1(I1), i2(I2), i3(I3), o1(O1), o2(O2), o3(O3).
-// test. b_times(1), {+L1,+I1,e^i(0),c(-1)}, {+L1,+O1,e^i(0),c(1)}, i1(I1), o1(O1).
+  :- b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, left{{+L2,e^i(0),c(-1)}}}.
+b_c@@ b{{+L1,+L2,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, left{$r}}
+  :- b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, left{{+L2,e^i(0),c(-1)},$r}}.
+b_d@@ b{{+L,e^i(0),c(1)}, {+L,+R,e^i(0),c(-1),$p2}, left{$r}}
+  :- b{{e^i(0),c(-1),$p2}, left{$r}, right{{+R,e^i(0),c(1)}}}.
+b_e@@ b{{+R,e^i(0),c(-1),$p2}, left{$r}, right{$w}}
+  :- b{{e^i(0),c(-1),$p2}, left{$r}, right{{+R,e^i(0),c(1)},$w}}.
+b_f@@ b{{e^i(0),c(-1)}, left{$r}, right{$w}} :- b{left{$r}, right{$w}}.
+b_g@@ b{left{{+R,e^i(0),c(-1)},$r}, right{$w}}
+  :- b{left{$r}, right{$w}, {+R,e^i(0),c(-1)}, right{to}, bg{}}.
+b_h@@ b{left{$r}, right{{e^i(0),c(1),$pw},$w}, {+R,e^i(0),c(-1),$pr}, right{$ww,to}, bg{$bg}}
+  :- b{left{$r}, right{$w}, {+W,+R,e^i(0),c(-1),$pr}, right{{+W,e^i(0),c(1),$pw},$ww,to}, bg{$bg}}.
+b_i@@ b{left{{+R,e^i(0),c(-1)},$r}, right{$w,to}, right{}, bg{$bg}, {e^i(0),c(-1),$pr}}
+  :- b{left{$r}, {+R,e^i(0),c(-1)}, right{$w}, right{to}, bg{{e^i(0),c(-1),$pr},$bg}}.
+b_j@@ b{left{}, right{$w,to}, right{}, bg{$bg}, $q} :- $w, $bg, $q.
 
 {
+  // these rules are treated as takinig 0 steps
   system_ruleset. '$callback'(zerostep).
-  f{+'+', $p} :- f{$p}. f{$p} :- {$p}.
-  b_times(0) :- .
+  {+'+', $p} :- {$p}.
+  {e^i(A),$p} :- A>=360, AA=A-360 | {e^i(AA),$p}.
+  {e^i(A),$p} :- A<0,    AA=A+360 | {e^i(AA),$p}.
+  b_times(0) :- . pi_times(0) :- . idgen_r(0) :- . idgen_g(0) :- .
 }.
+
