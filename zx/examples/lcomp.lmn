@@ -1,0 +1,142 @@
+//// when N+1=4
+{e^i(-90),c(-1),+L1,+L2}, {e^i(0),c(1),+L2,+L3,+L4,+L5,+L6},
+h{e^i(180),+L3,+L7}, h{e^i(180),+L4,+L8}, h{e^i(180),+L5,+L9}, h{e^i(180),+L6,+L10},
+{e^i(90),c(1),+L7,+L11}, {e^i(90),c(1),+L8,+L12}, {e^i(90),c(1),+L9,+L13}, {e^i(90),c(1),+L10,+L14},
+in(L1), out(L11,L12,L13,L14).
+use_rules = [no1,no2and3,no4,no5,k,h,b,hr,hr,f,f,np].
+
+//// when N+1=5
+// {e^i(-90),c(-1),+L1,+L2}, {e^i(0),c(1),+L2,+L3,+L4,+L5,+L6,+L15},
+// h{e^i(180),+L3,+L7}, h{e^i(180),+L4,+L8}, h{e^i(180),+L5,+L9}, h{e^i(180),+L6,+L10}, h{e^i(180),+L15,+L16},
+// {e^i(90),c(1),+L7,+L11}, {e^i(90),c(1),+L8,+L12}, {e^i(90),c(1),+L9,+L13}, {e^i(90),c(1),+L10,+L14}, {e^i(90),c(1),+L16,+L17},
+// in(L1), out(L11,L12,L13,L14,L17).
+// use_rules = [no1,no2and3,no4,no5,k,h,b,hr,hr,hr,f,f,f,np].
+
+//// Additional rules
+
+no1@@ use_rules=[no1|R], {e^i(270),c(-1),+I,+LL}, {e^i(0),c(C),+LL,+L,$p}
+  :- int(C) | use_rules=R, {e^i(270),c(-1),+I,+LL}, {e^i(0),c(C),+LL,+L,+LLL}, {e^i(0),c(C),+LLL,$p}.
+no2and3@@ use_rules=[no2and3|R], {+I,+L,$p1}, {+O,+L,$p2}
+  :- use_rules=R, {+I,+L1,$p1}, h{+L1,+L2,e^i(180)}, {e^i(90),c(1),+L2,+L3}, {e^i(-90),c(1),+L3,+L4}, h{+L4,+L5,e^i(180)}, {+O,+L5,$p2}.
+no4@@ use_rules=[no4|R], {e^i(270),c(-1),+I,+L1}, {e^i(0),c(1),+L1,+L2,+L3}, h{e^i(180),+L2,+L4}, h{e^i(180),+L3,+L5}, {e^i(90),c(1),+O1,+L4}, {e^i(90),c(1),+O2,+L5}
+  :- use_rules=R, {e^i(0),c(1),+I,+L1,+L2}, h{e^i(180),+L1,+L3}, {e^i(0),c(1),+O1,+L3,+L4}, h{e^i(180),+L2,+L5}, {e^i(0),c(1),+O2,+L5,+L6}, h{e^i(180),+L4,+L6}.
+no5@@ use_rules=[no5|R], {c(1),e^i(270),+I,+L1}, h{e^i(180),+L1,+O}
+  :- use_rules=R, h{e^i(180),+I,+L1}, {c(-1),e^i(270),+O,+L1}.
+
+// for K_n assume it's true (show the structure as a mem)
+k@@ use_rules=[k|R], {e^i(270),c(-1),+I,+L1}, {e^i(0),c(1),+L1,+L2,$p}, h{e^i(180),+L2,+L3}, {e^i(90),c(1),+L3,+L4}
+  :- use_rules=[kn|R], count{e^i(0),c(1),+I,+L2,$p,done{}}, h{e^i(180),+L2,+L3}, k{n(1),a(L3,L4),count(-1)}.
+kn@@ use_rules=[kn|R], counted{e^i(0),c(1),+I,+L1,$p}, h{e^i(180),+L1,+L2}, {e^i(90),c(1),+L2,+L3}, k{n(N),$k}
+  :- int(N), NN=N+1 | use_rules=[kn|R], counted{e^i(0),c(1),+I,+L1,$p}, h{e^i(180),+L1,+L2}, k{n(NN),a(L2,L3),$k}.
+count@@ count{e^i(0),c(1),+L,$p,done{$d}}, k{count(N),$k}
+:- int(N), NN=N+1 | count{e^i(0),c(1),$p,done{+L,$d}}, k{count(NN),$k}.
+count_fin@@ count{e^i(0),c(1),done{$d}} :- counted{e^i(0),c(1),$d}.
+is_k@@ use_rules=[kn|R], counted{$p}, k{n(N),count(C),$k}
+  :- N=:=C | use_rules=R, {$p}, k{n(N),$k}.
+
+// fix C = -1, A = 0
+h_a@@ use_rules=[hr|R], {+L,+LL,e^i(0),c(-1),$p}, h{+L,+O,e^i(180)}
+  :- use_rules=R, hr{{+L,+LL,e^i(0),c(-1),$p}, legs{}}, h{+L,+O,e^i(180)}.
+h_b@@ hr{{e^i(0),c(-1),+L,$p}, legs{}, $q}
+  :- hr{{e^i(0),c(-1),$p}, +L, legs{}, $q}.
+h_delete_h@@ hr{{e^i(0),c(-1)}, +L, legs{$l}, $q}, h{+L,e^i(180),+O}
+  :- hr{{e^i(0),c(-1)}, legs{+L,$l}, $q}, L=O.
+h_no_h@@ hr{{e^i(0),c(-1)}, +L, legs{$l}, $q}, {+L,$o}
+  :- hr{{e^i(0),c(-1)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, {+L,$o}.
+h_no_h_hr@@ hr{{e^i(0),c(-1)}, +L, legs{$l}, $q}, hr{+L,$o}
+  :- hr{{e^i(0),c(-1)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, hr{+L,$o}.
+h_end@@ hr{{e^i(0),c(-1)}, legs{$l}}
+  :- {e^i(0),c(1),$l}.
+
+// 9.128
+np@@ use_rules=[np|R], in(IN), {e^i(0),c(1),+IN,+P,$root}, h{e^i(180),+P,+I1}, {e^i(0),c(1),+I1,+O1,+H,$p}, h{e^i(180),+H,+L}, {e^i(0),c(1),+I2,+L,+K}, k{a(K,KK),$k}
+  :- use_rules=[npn|R], in(IN), {e^i(0),c(1),+IN,+P,$root}, h{e^i(180),+P,+I1}, count{e^i(0),c(1),+I1,+O1,+H,$p,done{}}, h{e^i(180),+H,+L}, {e^i(0),c(1),+I2,+L,+K}, k{a(K,KK),$k,count(-2),con(0)}.
+npn@@ use_rules=[npn|R], counted{e^i(0),c(1),+I1,+O1,+H,$p}, h{e^i(180),+H,+L}, {e^i(0),c(1),+I2,+L,+K}, k{a(K,KK),n(N),count(C),con(Con),$k}
+  :- N=:=C, CC=Con+1 | use_rules=[npn|R], counted{e^i(0),c(1),+I1,+O1,$p}, I2=K, k{a(K,KK),n(N),count(C),con(CC),$k}.
+np_fin@@ use_rules=[npn|R], in(IN), {e^i(0),c(1),+IN,+P,$root}, h{e^i(180),+P,+I}, counted{e^i(0),c(1),+I,+O}, k{n(N),count(C),con(Con),$k}
+  :- N=:=C, N=:=Con, NN=N+1 | use_rules=R, in(IN), {e^i(0),c(1),+IN,+P,$root}, h{e^i(180),+P,+I}, k{a(I,O),n(NN),$k}.
+
+//// All ZX-calculus basic rules
+
+// spider fusion
+f@@ use_rules=[f|R], {+L1,e^i(A),$p1,c(C1)}, {+L1,e^i(B),$p2,c(C2)}
+  :- int(A), int(B), AplusB=A+B, int(C1), int(C2), C1*C2=:=1 |
+  use_rules=R, {e^i(AplusB),$p1,$p2,c(C1)}.
+
+// hopf
+hopf@@ use_rules{hopf,$r}, {+L1,+L2,+I1,+O1,e^i(A),c(1)}, {+L1,+L2,+I2,+O2,e^i(B),c(-1)}
+  :- int(A), int(B) | use_rules{hopf,$r}, {+I1,+O1,e^i(A),c(1)}, {+I2,+O2,e^i(B),c(-1)}.
+
+// hadamard cancellation
+hh@@ h{+L1,+L2,e^i(180)}, h{+L2,+L3,e^i(180)} :- L1=L3.
+
+// identity removal
+id@@ use_rules=[id|R], {+L1,+L2,e^i(0),c(C)} :- int(C) | use_rules=R, L1=L2.
+
+// identity generation
+idgen_g@@ {+L1,$p1}, {+L2,$p2}, idgen_g(N)
+  :- int(N), N>0, NN=N-1 | {+L1,+LL1,$p1}, {+L2,+LL2,$p2}, {+LL1,+LL2,e^i(0),c(1)}, idgen_g(NN).
+idgen_r@@ {+L1,$p1}, {+L2,$p2}, idgen_r(N)
+  :- int(N), N>0, NN=N-1 | {+L1,+LL1,$p1}, {+L2,+LL2,$p2}, {+LL1,+LL2,e^i(0),c(-1)}, idgen_r(NN).
+
+// color change
+h@@ use_rules{h1,$r}, {+L,e^i(A),c(C)}, h{+L,+O,e^i(180)}
+  :- int(A), int(C), CC=-C | use_rules{h1,$r}, {+O,e^i(A),c(CC)}. // for n=1
+h_a@@ use_rules=[h|R], {+L,+LL,e^i(A),c(C),$p}, h{+L,+O,e^i(180)}
+  :- int(A), int(C) | use_rules=R, hr{{+L,+LL,e^i(A),c(C),$p}, legs{}}, h{+L,+O,e^i(180)}.
+h_b@@ hr{{e^i(A),c(C),+L,$p}, legs{}, $q}
+  :- int(A), int(C) | hr{{e^i(A),c(C),$p}, +L, legs{}, $q}.
+h_delete_h@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, h{+L,e^i(180),+O}
+  :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+L,$l}, $q}, L=O.
+h_no_h@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, {+L,$o}
+  :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, {+L,$o}.
+h_no_h_hr@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, hr{+L,$o}
+  :- int(A), int(C) | hr{{e^i(A),c(C)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, hr{+L,$o}.
+h_end@@ hr{{e^i(A),c(C)}, legs{$l}}
+  :- int(A), int(C), CC=-C | {e^i(A),c(CC),$l}.
+
+// pi commutation
+pi_a@@ use_rules{pi,$r}, {+L,+L1,e^i(180),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}, pi_times(P)
+  :- int(A), int(C1), int(C2), C1*C2=:=-1, AA=-A, P>0, PP=P-1 |
+  use_rules{pi,$r}, pi{in(L),a{e^i(AA),c(C2)}, +L2, $p}, pi_times(PP).
+pi_b@@ pi{in(L),a{e^i(A),c(C),$s}, +L2, $p}
+  :- int(A), int(C), CC=-C | pi{in(L),a{+L3,e^i(A),c(C),$s}, $p}, {+L2,+L3,e^i(180),c(CC)}.
+pi_c@@ pi{in(L),a{$s}} :- {+L,$s}.
+
+// copy
+c_a@@ use_rules{c,$r}, {+L1,e^i(0),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}
+  :- int(A), int(C1), int(C2), C1*C2=:=-1 | use_rules{c,$r}, c{a{+L2,$p},c(C1)}.
+c_b@@ c{a{+L1,$p},c(C1),$q}
+  :- int(C1) | c{{+L1,e^i(0),c(C1)},a{$p},c(C1),$q}.
+c_c@@ c{a{},c(C1),$q} :- int(C1) | $q.
+
+// bialgebra complementation
+b@@ use_rules{b1,$r}, {+I,+L,e^i(A1),c(1)}, {+L,+O,e^i(A2),c(-1)}
+   :- int(A1), int(A2) | use_rules{b1,$r}, {+O,+L,e^i(A1),c(1)}, {+L,+I,e^i(A2),c(-1)}. // for n=1
+b_a@@ use_rules=[b|R], {+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}
+  :- use_rules=R, b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}}.
+b_b@@ b{{+L1,+L2,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}}
+  :- b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, left{{+L2,e^i(0),c(-1)}}}.
+b_c@@ b{{+L1,+L2,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, left{$r}}
+  :- b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, left{{+L2,e^i(0),c(-1)},$r}}.
+b_d@@ b{{+L,e^i(0),c(1)}, {+L,+R,e^i(0),c(-1),$p2}, left{$r}}
+  :- b{{e^i(0),c(-1),$p2}, left{$r}, right{{+R,e^i(0),c(1)}}}.
+b_e@@ b{{+R,e^i(0),c(-1),$p2}, left{$r}, right{$w}}
+  :- b{{e^i(0),c(-1),$p2}, left{$r}, right{{+R,e^i(0),c(1)},$w}}.
+b_f@@ b{{e^i(0),c(-1)}, left{$r}, right{$w}} :- b{left{$r}, right{$w}}.
+b_g@@ b{left{{+R,e^i(0),c(-1)},$r}, right{$w}}
+  :- b{left{$r}, right{$w}, {+R,e^i(0),c(-1)}, right{to}, bg{}}.
+b_h@@ b{left{$r}, right{{e^i(0),c(1),$pw},$w}, {+R,e^i(0),c(-1),$pr}, right{$ww,to}, bg{$bg}}
+  :- b{left{$r}, right{$w}, {+W,+R,e^i(0),c(-1),$pr}, right{{+W,e^i(0),c(1),$pw},$ww,to}, bg{$bg}}.
+b_i@@ b{left{{+R,e^i(0),c(-1)},$r}, right{$w,to}, right{}, bg{$bg}, {e^i(0),c(-1),$pr}}
+  :- b{left{$r}, {+R,e^i(0),c(-1)}, right{$w}, right{to}, bg{{e^i(0),c(-1),$pr},$bg}}.
+b_j@@ b{left{}, right{$w,to}, right{}, bg{$bg}, $q} :- $w, $bg, $q.
+
+{
+  // these rules are treated as taking 0 step
+  system_ruleset. '$callback'(zerostep).
+  {+'+', $p} :- {$p}.
+  {e^i(A),$p} :- A>=360, AA=A-360 | {e^i(AA),$p}.
+  {e^i(A),$p} :- A<0,    AA=A+360 | {e^i(AA),$p}.
+  b_times(0) :- . pi_times(0) :- . idgen_r(0) :- . idgen_g(0) :- .
+}.

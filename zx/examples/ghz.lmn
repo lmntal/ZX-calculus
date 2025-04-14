@@ -1,17 +1,76 @@
-/// line 1
-{p(0), +R1, c(1)}, {p(0), +R1, +O1, +G1, c(1)}, o1(O1),
-/// line 2
-{p(0), +H, c(1)}, hadamard(H, G2), {p(0), +G1, +G2, +G3, c(-1)}, {p(0), +G3, +R2, +O2, c(-1)}, o2(O2),
-/// line 3
-{p(0), +R3, c(1)}, {p(0), +R2, +R3, +O3, c(1)}, o3(O3).
+//// GHZ preparation circuit
+// 3 bit
+o{+Out1}, o{+Out2}, o{+Out3},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+Out3,e^i(0),c(-1)}.
 
-f@@ {+L1, p(P1), $p1, c(C1)}, {+L1, p(P2), $p2, c(C2)} :- P=P1+P2, int(C1), int(C2), C1==C2 | {p(P), $p1, $p2, c(C2)}.
+// 4 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
+{+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+Out4,e^i(0),c(-1)}.
 
-id@@ {+L1, +L2, p(0), c(C)} :- int(C) | L1=L2.
+// 5 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4}, o{+Out5},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
+{+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+ZX6,e^i(0),c(-1)}, {+ZX6,+ZX7,+Out4,e^i(0),c(1)},
+{+IX4,e^i(0),c(-1)}, {+IX4,+ZX7,+Out5,e^i(0),c(-1)}.
 
-h_1@@ {p($p), +L1, c(C)}, hadamard(L1, L) :- int(C) | {+L, p($p), c(-C)}.
+// 6 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4}, o{+Out5}, o{+Out6},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
+{+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+ZX6,e^i(0),c(-1)}, {+ZX6,+ZX7,+Out4,e^i(0),c(1)},
+{+IX4,e^i(0),c(-1)}, {+IX4,+ZX7,+ZX8,e^i(0),c(-1)}, {+ZX8,+ZX9,+Out5,e^i(0),c(1)},
+{+IX5,e^i(0),c(-1)}, {+IX5,+ZX9,+Out6,e^i(0),c(-1)}.
 
-{
-  system_ruleset. '$callback'(zerostep).
-  {+'+', $p} :- {$p}. // delete +'+' after f
-}.
+// 7 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4}, o{+Out5}, o{+Out6}, o{+Out7},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
+{+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+ZX6,e^i(0),c(-1)}, {+ZX6,+ZX7,+Out4,e^i(0),c(1)},
+{+IX4,e^i(0),c(-1)}, {+IX4,+ZX7,+ZX8,e^i(0),c(-1)}, {+ZX8,+ZX9,+Out5,e^i(0),c(1)},
+{+IX5,e^i(0),c(-1)}, {+IX5,+ZX9,+ZX10,e^i(0),c(-1)}, {+ZX10,+ZX11,+Out6,e^i(0),c(1)},
+{+IX6,e^i(0),c(-1)}, {+IX6,+ZX11,+Out7,e^i(0),c(-1)}.
+
+// 8 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4}, o{+Out5}, o{+Out6}, o{+Out7}, o{+Out8},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
+{+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+ZX6,e^i(0),c(-1)}, {+ZX6,+ZX7,+Out4,e^i(0),c(1)},
+{+IX4,e^i(0),c(-1)}, {+IX4,+ZX7,+ZX8,e^i(0),c(-1)}, {+ZX8,+ZX9,+Out5,e^i(0),c(1)},
+{+IX5,e^i(0),c(-1)}, {+IX5,+ZX9,+ZX10,e^i(0),c(-1)}, {+ZX10,+ZX11,+Out6,e^i(0),c(1)},
+{+IX6,e^i(0),c(-1)}, {+IX6,+ZX11,+ZX12,e^i(0),c(-1)}, {+ZX12,+ZX13,+Out7,e^i(0),c(1)},
+{+IX7,e^i(0),c(-1)}, {+IX7,+ZX13,+Out8,e^i(0),c(-1)}.
+
+// 9 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4}, o{+Out5}, o{+Out6}, o{+Out7}, o{+Out8}, o{+Out9},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
+{+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+ZX6,e^i(0),c(-1)}, {+ZX6,+ZX7,+Out4,e^i(0),c(1)},
+{+IX4,e^i(0),c(-1)}, {+IX4,+ZX7,+ZX8,e^i(0),c(-1)}, {+ZX8,+ZX9,+Out5,e^i(0),c(1)},
+{+IX5,e^i(0),c(-1)}, {+IX5,+ZX9,+ZX10,e^i(0),c(-1)}, {+ZX10,+ZX11,+Out6,e^i(0),c(1)},
+{+IX6,e^i(0),c(-1)}, {+IX6,+ZX11,+ZX12,e^i(0),c(-1)}, {+ZX12,+ZX13,+Out7,e^i(0),c(1)},
+{+IX7,e^i(0),c(-1)}, {+IX7,+ZX13,+ZX14,e^i(0),c(-1)}, {+ZX14,+ZX15,+Out8,e^i(0),c(1)},
+{+IX8,e^i(0),c(-1)}, {+IX8,+ZX15,+Out9,e^i(0),c(-1)}.
+
+// 10 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4}, o{+Out5}, o{+Out6}, o{+Out7}, o{+Out8}, o{+Out9}, o{+Out10},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
+{+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+ZX6,e^i(0),c(-1)}, {+ZX6,+ZX7,+Out4,e^i(0),c(1)},
+{+IX4,e^i(0),c(-1)}, {+IX4,+ZX7,+ZX8,e^i(0),c(-1)}, {+ZX8,+ZX9,+Out5,e^i(0),c(1)},
+{+IX5,e^i(0),c(-1)}, {+IX5,+ZX9,+ZX10,e^i(0),c(-1)}, {+ZX10,+ZX11,+Out6,e^i(0),c(1)},
+{+IX6,e^i(0),c(-1)}, {+IX6,+ZX11,+ZX12,e^i(0),c(-1)}, {+ZX12,+ZX13,+Out7,e^i(0),c(1)},
+{+IX7,e^i(0),c(-1)}, {+IX7,+ZX13,+ZX14,e^i(0),c(-1)}, {+ZX14,+ZX15,+Out8,e^i(0),c(1)},
+{+IX8,e^i(0),c(-1)}, {+IX8,+ZX15,+ZX16,e^i(0),c(-1)}, {+ZX16,+ZX17,+Out9,e^i(0),c(1)},
+{+IX9,e^i(0),c(-1)}, {+IX9,+ZX17,+Out10,e^i(0),c(-1)}.

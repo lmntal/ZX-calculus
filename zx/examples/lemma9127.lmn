@@ -1,23 +1,53 @@
+//// lemma 9.127 for lcomp
+{+I}, out(O1), out(O2),
+{c(1),e^i(0),+I,+L1,+L2}, h{e^i(180),+L1,+L3}, h{e^i(180),+L2,+L4},
+{c(1),e^i(0),+O1,+L3,+L5}, {c(1),e^i(0),+O2,+L4,+L6}, h{e^i(180),+L5,+L6}.
+use_rules=[hsp,h_def,f,f,fg0,fg0,fg1,b_r22,p9109,f,h,h].
+
+//// additional rules
+
+fg0@@ use_rules=[fg0|R], {e^i(90),c(1),+L1,+L2,$p}
+  :- use_rules=R, {e^i(0),c(1),$p,+LL,+L2}, {e^i(90),c(1),+LL,+L1}.
+fg1@@ use_rules=[fg1|R], {e^i(90),c(-1),$p}
+  :- use_rules=R, {e^i(0),c(-1),$p,+LL}, {e^i(90),c(-1),+LL}.
+b_r22@@ use_rules=[b_r22|R], {e^i(0),c(1),+I1,+L1,+L2}, {e^i(0),c(1),+I2,+L3,+L4}, {e^i(0),c(-1),+O1,+L1,+L3}, {e^i(0),c(-1),+O2,+L2,+L4}
+  :- use_rules=R, {e^i(0),c(-1),+I1,+I2,+L}, {e^i(0),c(1),+O1,+O2,+L}.
+p9109@@ use_rules=[p9109|R], {e^i(90),c(C),+L} :- int(C), CC=-C | use_rules=R, {e^i(-90),c(CC),+L}.
+
+// color change C=1, A=0
+h_a@@ use_rules=[hsp|R], {+L,+LL,e^i(0),c(1),$p}, h{+L,+O,e^i(180)}
+  :- use_rules=R, hr{{+L,+LL,e^i(0),c(1),$p}, legs{}}, h{+L,+O,e^i(180)}.
+h_b@@ hr{{e^i(0),c(1),+L,$p}, legs{}, $q}
+  :- hr{{e^i(0),c(1),$p}, +L, legs{}, $q}.
+h_delete_h@@ hr{{e^i(0),c(1)}, +L, legs{$l}, $q}, h{+L,e^i(180),+O}
+  :- hr{{e^i(0),c(1)}, legs{+L,$l}, $q}, L=O.
+h_no_h@@ hr{{e^i(0),c(1)}, +L, legs{$l}, $q}, {+L,$o}
+  :- hr{{e^i(0),c(1)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, {+L,$o}.
+h_no_h_hr@@ hr{{e^i(0),c(1)}, +L, legs{$l}, $q}, hr{+L,$o}
+  :- hr{{e^i(0),c(1)}, legs{+H,$l}, $q}, h{+H,e^i(180),+L}, hr{+L,$o}.
+h_end@@ hr{{e^i(0),c(1)}, legs{$l}}
+  :- {e^i(0),c(-1),$l}.
+
 //// All ZX-calculus basic rules
 
 // definition of Hadamard
-h_def@@ h{e^i(180),+I,+O}
-  :- {e^i(90),c(1),+I,+L1}, {e^i(90),c(-1),+L1,+L2}, {e^i(90),c(1),+L2,+O}.
+h_def@@ use_rules=[h_def|R], h{e^i(180),+I,+O}
+  :- use_rules=R, {e^i(90),c(1),+I,+L1}, {e^i(90),c(-1),+L1,+L2}, {e^i(90),c(1),+L2,+O}.
 
 // spider fusion
-f@@ {+L1,e^i(A),$p1,c(C1)}, {+L1,e^i(B),$p2,c(C2)}
+f@@ use_rules=[f|R], {+L1,e^i(A),$p1,c(C1)}, {+L1,e^i(B),$p2,c(C2)}
   :- int(A), int(B), AplusB=A+B, int(C1), int(C2), C1*C2=:=1 |
-  {e^i(AplusB),$p1,$p2,c(C1)}.
+  use_rules=R, {e^i(AplusB),$p1,$p2,c(C1)}.
 
 // hopf
-hopf@@ {+L1,+L2,$p1,e^i(A),c(1)}, {+L1,+L2,$p2,e^i(B),c(-1)}
-  :- int(A), int(B) | {e^i(A),c(1),$p1}, {e^i(B),c(-1),$p2}.
+hopf@@ use_rules{hopf,$r}, {+L1,+L2,+I1,+O1,e^i(A),c(1)}, {+L1,+L2,+I2,+O2,e^i(B),c(-1)}
+  :- int(A), int(B) | use_rules{hopf,$r}, {+I1,+O1,e^i(A),c(1)}, {+I2,+O2,e^i(B),c(-1)}.
 
 // hadamard cancellation
 hh@@ h{+L1,+L2,e^i(180)}, h{+L2,+L3,e^i(180)} :- L1=L3.
 
 // identity removal
-id@@ {+L1,+L2,e^i(0),c(C)} :- int(C), C*C=:=1 | L1=L2.
+id@@ use_rules=[id|R], {+L1,+L2,e^i(0),c(C)} :- int(C) | use_rules=R, L1=L2.
 
 // identity generation
 idgen_g@@ {+L1,$p1}, {+L2,$p2}, idgen_g(N)
@@ -26,10 +56,10 @@ idgen_r@@ {+L1,$p1}, {+L2,$p2}, idgen_r(N)
   :- int(N), N>0, NN=N-1 | {+L1,+LL1,$p1}, {+L2,+LL2,$p2}, {+LL1,+LL2,e^i(0),c(-1)}, idgen_r(NN).
 
 // color change
-h@@ {+L,e^i(A),c(C)}, h{+L,+O,e^i(180)}
-  :- int(A), int(C), CC=-C | {+O,e^i(A),c(CC)}. // for n=1
-h_a@@ {+L,+LL,e^i(A),c(C),$p}, h{+L,+O,e^i(180)}
-  :- int(A), int(C) | hr{{+L,+LL,e^i(A),c(C),$p}, legs{}}, h{+L,+O,e^i(180)}.
+h@@ use_rules{h1,$r}, {+L,e^i(A),c(C)}, h{+L,+O,e^i(180)}
+  :- int(A), int(C), CC=-C | use_rules{h1,$r}, {+O,e^i(A),c(CC)}. // for n=1
+h_a@@ use_rules=[h|R], {+L,+LL,e^i(A),c(C),$p}, h{+L,+O,e^i(180)}
+  :- int(A), int(C) | use_rules=R, hr{{+L,+LL,e^i(A),c(C),$p}, legs{}}, h{+L,+O,e^i(180)}.
 h_b@@ hr{{e^i(A),c(C),+L,$p}, legs{}, $q}
   :- int(A), int(C) | hr{{e^i(A),c(C),$p}, +L, legs{}, $q}.
 h_delete_h@@ hr{{e^i(A),c(C)}, +L, legs{$l}, $q}, h{+L,e^i(180),+O}
@@ -42,25 +72,25 @@ h_end@@ hr{{e^i(A),c(C)}, legs{$l}}
   :- int(A), int(C), CC=-C | {e^i(A),c(CC),$l}.
 
 // pi commutation
-pi_a@@ {+L,+L1,e^i(180),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}, pi_times(P)
+pi_a@@ use_rules{pi,$r}, {+L,+L1,e^i(180),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}, pi_times(P)
   :- int(A), int(C1), int(C2), C1*C2=:=-1, AA=-A, P>0, PP=P-1 |
-  pi{in(L),a{e^i(AA),c(C2)}, +L2, $p}, pi_times(PP).
+  use_rules{pi,$r}, pi{in(L),a{e^i(AA),c(C2)}, +L2, $p}, pi_times(PP).
 pi_b@@ pi{in(L),a{e^i(A),c(C),$s}, +L2, $p}
   :- int(A), int(C), CC=-C | pi{in(L),a{+L3,e^i(A),c(C),$s}, $p}, {+L2,+L3,e^i(180),c(CC)}.
 pi_c@@ pi{in(L),a{$s}} :- {+L,$s}.
 
 // copy
-c_a@@ {+L1,e^i(0),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}
-  :- int(A), int(C1), int(C2), C1*C2=:=-1 | c{a{+L2,$p},c(C1)}.
+c_a@@ use_rules{c,$r}, {+L1,e^i(0),c(C1)}, {+L1,+L2,e^i(A),c(C2),$p}
+  :- int(A), int(C1), int(C2), C1*C2=:=-1 | use_rules{c,$r}, c{a{+L2,$p},c(C1)}.
 c_b@@ c{a{+L1,$p},c(C1),$q}
   :- int(C1) | c{{+L1,e^i(0),c(C1)},a{$p},c(C1),$q}.
 c_c@@ c{a{},c(C1),$q} :- int(C1) | $q.
 
 // bialgebra complementation
-b@@ {+I,+L,e^i(A1),c(1)}, {+L,+O,e^i(A2),c(-1)}
-   :- int(A1), int(A2) | {+O,+L,e^i(A1),c(1)}, {+L,+I,e^i(A2),c(-1)}. // for n=1
-b_a@@ {+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, b_times(B)
-  :- int(B), B>0, BB=B-1 | b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}}, b_times(BB).
+b@@ use_rules{b1,$r}, {+I,+L,e^i(A1),c(1)}, {+L,+O,e^i(A2),c(-1)}
+   :- int(A1), int(A2) | use_rules{b1,$r}, {+O,+L,e^i(A1),c(1)}, {+L,+I,e^i(A2),c(-1)}. // for n=1
+b_a@@ use_rules=[b|R], {+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}
+  :- use_rules=R, b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}}.
 b_b@@ b{{+L1,+L2,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}}
   :- b{{+L1,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, left{{+L2,e^i(0),c(-1)}}}.
 b_c@@ b{{+L1,+L2,e^i(0),c(1),$p1}, {+L1,e^i(0),c(-1),$p2}, left{$r}}
