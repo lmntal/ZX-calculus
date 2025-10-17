@@ -1,85 +1,83 @@
-% --bfs --limited-step=5
-
 l1@@ h{$p,+L1,e^i(180)}, h{+L1,+L2,e^i(180)}, h{+L2,$q,e^i(A)} :- int(A) | h{$p,$q,e^i(A)}.
-// test. h{+I1,+I2,+I3,+L1,e^i(180)}, h{+L1,+L2,e^i(180)}, h{+L2,+O1,+O2,e^i(120)}, [I1,I2,I3], [O1,O2].
+
+// ZH1 rule
 l2_a@@ h{+L,$ph,e^i(180)}, {+L,$pr,e^i(0),c(-1)} :- l2{h{+L,$ph,e^i(180)}, {+L,$pr,e^i(0),c(-1)}}.
 l2_b@@ l2{h{+L,+H,$ph,e^i(180)}, {+L,$pr,e^i(0),c(-1)}}
-    :- l2{h{+L,$ph,e^i(180)}, w{{+H,e^i(0),c(1)}}, {+L,$pr,e^i(0),c(-1)}}.
+  :- l2{h{+L,$ph,e^i(180)}, w{{+H,e^i(0),c(1)}}, {+L,$pr,e^i(0),c(-1)}}.
 l2_c@@ l2{h{+L,+H,$ph,e^i(180)}, {+L,$pr,e^i(0),c(-1)}, w{$ww}}
-    :- l2{h{+L,$ph,e^i(180)}, w{{+H,e^i(0),c(1)}, $ww}, {+L,$pr,e^i(0),c(-1)}}.
+  :- l2{h{+L,$ph,e^i(180)}, w{{+H,e^i(0),c(1)}, $ww}, {+L,$pr,e^i(0),c(-1)}}.
 l2_d@@ l2{h{+L,e^i(180)}, {+L,+R,$pr,e^i(0),c(-1)}, w{$ww}}
-    :- l2{{$pr,e^i(0),c(-1)}, w{$ww}, hbox{h{+R,e^i(180)}}}.
+  :- l2{{$pr,e^i(0),c(-1)}, w{$ww}, hbox{h{+R,e^i(180)}}}.
 l2_e@@ l2{{+R,$pr,e^i(0),c(-1)}, w{$ww}, hbox{$hh}}
-    :- l2{{$pr,e^i(0),c(-1)}, w{$ww}, hbox{h{+R,e^i(180)},$hh}}.
+  :- l2{{$pr,e^i(0),c(-1)}, w{$ww}, hbox{h{+R,e^i(180)},$hh}}.
 l2_f@@ l2{{e^i(0),c(-1)}, w{$ww}, hbox{$hh}} :- l2{w{$ww}, hbox{$hh}}.
 l2_g@@ l2{w{{+W,e^i(0),c(1)},$ww}, hbox{$hh}}
-    :- l2{w{$ww}, hbox{$hh}, {+W,e^i(0),c(1)}, hbox{to}, l2g{}}.
+  :- l2{w{$ww}, hbox{$hh}, {+W,e^i(0),c(1)}, hbox{to}, l2g{}}.
 l2_h@@ l2{w{$ww}, hbox{h{$ph,e^i(180)},$hh}, {+W,e^i(0),c(1),$hs}, hbox{$hh1,to}, l2g{$lg}}
-    :- l2{w{$ww}, hbox{$hh}, {+HH,+W,e^i(0),c(1),$hs}, hbox{h{$ph,+HH,e^i(180)},$hh1,to}, l2g{$lg}}.
+  :- l2{w{$ww}, hbox{$hh}, {+HH,+W,e^i(0),c(1),$hs}, hbox{h{$ph,+HH,e^i(180)},$hh1,to}, l2g{$lg}}.
 l2_i@@ l2{w{{+W,e^i(0),c(1)},$ww}, hbox{$hh,to}, hbox{}, l2g{$lg}, {e^i(0),c(1),$hs}}
-    :- l2{w{$ww}, {+W,e^i(0),c(1)}, hbox{$hh}, hbox{to}, l2g{$lg, {e^i(0),c(1),$hs}}}.
+  :- l2{w{$ww}, {+W,e^i(0),c(1)}, hbox{$hh}, hbox{to}, l2g{$lg, {e^i(0),c(1),$hs}}}.
 l2_j@@ l2{w{}, hbox{$hh,to}, hbox{}, l2g{$lg}, $q} :- $hh, $lg, $q.
-// test. h{+L,+H1,+H2,+H3,e^i(180)}, {+L,+R1,+R2,+R3,+R4,e^i(0),c(-1)}, h1(H1),h2(H2),h3(H3), r1(R1),r2(R2),r3(R3),r4(R4).
-// test. h{+L,+H1,e^i(180)}, {+L,+R1,+R2,+R3,+R4,e^i(0),c(-1)}, h1(H1), r1(R1),r2(R2),r3(R3),r4(R4).
-// test. h{+L,+H1,+H2,+H3,e^i(180)}, {+L,+R1,e^i(0),c(-1)}, h1(H1),h2(H2),h3(H3), r1(R1).
+
 l3_a@@ {+L,e^i(180),c(1)}, h{+L,+L1,+L2,$p,e^i(A)}
-    :- int(A) | l3{{+L,e^i(180),c(1)}, h{+L,+L1,$p,e^i(A)}, {+L2,e^i(180),c(-1)}}.
+  :- int(A) | l3{{+L,e^i(180),c(1)}, h{+L,+L1,$p,e^i(A)}, {+L2,e^i(180),c(-1)}}.
 l3_b@@ l3{{+L,e^i(180),c(1)}, h{+L,+L1,+L2,$p,e^i(A)}, $q}
-    :- int(A) | l3{{+L,e^i(180),c(1)}, h{+L,+L1,$p,e^i(A)}, {+L2,e^i(180),c(-1)}, $q}.
+  :- int(A) | l3{{+L,e^i(180),c(1)}, h{+L,+L1,$p,e^i(A)}, {+L2,e^i(180),c(-1)}, $q}.
 l3_c@@ l3{{+L,e^i(180),c(1)}, h{+L,+L1,e^i($a)}, $p} :- {+L1,e^i(180),c(-1)}, $p.
-// test. {+L,e^i(180),c(1)}, h{+L,+L1,+L2,+L3,e^i(30)}, {+L1,+L2,+L3}.
+
 l4@@ h{+L,e^i(180)}, h{+L,+L1,+L2,$p,e^i(180)}
-    :- h{+L,e^i(180)}, h{+L,+L1,$p,e^i(180)}, h{+L3,e^i(180)}, h{+L2,+L3,e^i(180)}.
-// test. h{+L,e^i(180)}, h{+L,+L1,+L2,+L3,+L4,+L5,e^i(180)}, {+L1,+L2,+L3,+L4,+L5}.
+  :- h{+L,e^i(180)}, h{+L,+L1,$p,e^i(180)}, h{+L3,e^i(180)}, h{+L2,+L3,e^i(180)}.
+
 l5_a@@ {+L,e^i(0),c(-1)}, h{+L,+L1,+L2,$p,e^i(A)}
-    :- int(A) | l5{{+L,e^i(0),c(-1)}, h{+L,+L1,$p,e^i(A)}, {+L2,e^i(0),c(1)}}.
+  :- int(A) | l5{{+L,e^i(0),c(-1)}, h{+L,+L1,$p,e^i(A)}, {+L2,e^i(0),c(1)}}.
 l5_b@@ l5{{+L,e^i(0),c(-1)}, h{+L,+L1,+L2,$p,e^i(A)}, $q}
-    :- int(A) | l5{{+L,e^i(0),c(-1)}, h{+L,+L1,$p,e^i(A)}, {+L2,e^i(0),c(1)}, $q}.
+  :- int(A) | l5{{+L,e^i(0),c(-1)}, h{+L,+L1,$p,e^i(A)}, {+L2,e^i(0),c(1)}, $q}.
 l5_c@@ l5{{+L,e^i(0),c(-1)}, h{+L,+L1,e^i(A)}, $p} :- int(A) | {+L1,e^i(0),c(1)}, $p.
-// test. {+L,e^i(0),c(-1)}, h{+L,+L1,+L2,+L3,e^i(30)}, {+L1,+L2,+L3}.
+
 l6@@ {+L,e^i(180),c(-1)}, h{+L,$p,e^i(A)} :- int(A) | h{$p,e^i(A)}.
-// test. {+L,e^i(180),c(-1)}, h{+L,e^i(180)}.
+
 l7_a@@ {+I,+L,e^i(A),c(-1)}, h{+L,$p,e^i(180)}
-    :- int(A) | {l7_a{+I,e^i(A)}, l7{$p}}.
+  :- int(A) | {l7_a{+I,e^i(A)}, l7{$p}}.
 l7_b@@ {l7_a{+I,e^i(A)}, l7{+L,$p}, $q} :- int(A) | {l7_a{+I,+M}, {+M,+H,+L,e^i(0),c(1)}, h{+H,e^i(A)}, l7{$p}, $q}.
 l7_c@@ {l7_a{$p,+M}, {+M,+H,+L,e^i(0),c(1)}, h{+H,$q,e^i(A)}, l7{+L1,$r}, $s}
-    :- int(A) | {l7_a{$p,+M,+M1}, {+M,+H,+L,e^i(0),c(1)}, {+M1,+H1,+L1,e^i(0),c(1)}, h{+H,+H1,$q,e^i(A)}, l7{$r}, $s}.
+  :- int(A) | {l7_a{$p,+M,+M1}, {+M,+H,+L,e^i(0),c(1)}, {+M1,+H1,+L1,e^i(0),c(1)}, h{+H,+H1,$q,e^i(A)}, l7{$r}, $s}.
 l7_d@@ {l7_a{$p}, l7{}, $s} :- h{$p, e^i(180)}, $s.
-// test. {+I,+L,e^i(30),c(-1)}, h{+L,+L1,+L2,+L3,e^i(180)}, in(I), 1(L1), 2(L2), 3(L3).
+
 l8@@ {$p,+L1,+L2,e^i(0),c(1)}, h{+L1,+L2,$q,e^i(A)} :- int(A) | {$p,+L,e^i(0),c(1)}, h{+L,$q,e^i(A)}.
-// test. {+L1,+L2,e^i(0),c(1)}, h{+L1,+L2,e^i(20)}.
+
+// ZH2 rule
 l9_a@@ {+L,e^i{0},c(1)}, h{+F,$ph,e^i(A)}
-    :- int(A) | l9{{+L,+R,+H2,e^i{0},c(1)}, {+R,+H1,e^i(180),c(-1)}, h{+H1,e^i(A)}, h{+H2,e^i(A)}, h_dot{$ph}, dot{{+F,e^i(0),c(1)}}}.
+  :- int(A) | l9{{+L,+R,+H2,e^i{0},c(1)}, {+R,+H1,e^i(180),c(-1)}, h{+H1,e^i(A)}, h{+H2,e^i(A)}, h_dot{$ph}, dot{{+F,e^i(0),c(1)}}}.
 l9_b@@ l9{h_dot{+H,$ph}, dot{$d}, $q} :- l9{h_dot{$ph}, dot{{+H,e^i(0),c(1)},$d}, $q}.
 l9_c@@ l9{dot{{+H,e^i(0),c(1)},$d}, h{$h1}, h{$h2}, $q} :- l9{dot{$d}, {+H,+H1,+H2,e^i(0),c(1)}, h{+H1,$h1}, h{+H2,$h2}, $q}.
 l9_d@@ l9{dot{}, h_dot{}, $q} :- $q.
-// test. l(L), {+L,e^i{0},c(1)}, h{+H1,+H2,+H3,e^i(120)}, h1(H1), h2(H2), h3(H3).
+
 r1@@ h{+L1,+L2,e^i(180)}, h{+L2,+L3,e^i(180)} :- L1=L3.
 r2_a@@ h{+L,+L1,$p,e^i(0)} :- r2{{+L,e^i(0),c(1)}, h{+L1,$p,e^i(0)}}.
 r2_b@@ r2{h{+L,+L1,$p,e^i(0)}, $q} :- r2{{+L,e^i(0),c(1)}, h{+L1,$p,e^i(0)}, $q}.
 r2_c@@ r2{h{+L,e^i(0)}, $p} :- {+L,e^i(0),c(1)}, $p.
-// test. h{+L,+L1,+L2,+L3,e^i(0)}, {+L,+L1,+L2,+L3}.
+
 r3@@ h{+L,e^i()} :- {+L,e^i(0),c(-1)}.
 r4@@ h{+L,$p,e^i()} :- {+L1,e^i(0),c(1)}, h{+L1,+L,$p,e^i(180)}.
-// test. h{+L,e^i(), +L1}, {+L,+L1}.
+
 r56@@ h{+L,e^i(A)} :- {+L,e^i(A),c(1)}.
 r7@@ h{+I,+O,e^i(A)} :-
-    int(A), A2 = A/2 | {+I,+L1,e^i(A2),c(1)}, {+L2,e^i(A2),c(1)},{+L3,+O,e^i(A2),c(1)}, {+L1,+L2,+L3,e^i(0),c(-1)}.
-// test. h{+I,+O,e^i(120)}. {+I,+O}.
+  int(A), A2 = A/2 | {+I,+L1,e^i(A2),c(1)}, {+L2,e^i(A2),c(1)},{+L3,+O,e^i(A2),c(1)}, {+L1,+L2,+L3,e^i(0),c(-1)}.
+
 r8@@ h{+L1,+L2,+L3,e^i(A)}
-    :- int(A), A4 = A/4, MA4 = -A4 |
-    {+LL1,e^i(MA4),c(1)}, {+LL2,e^i(A4),c(1)},
-    {+LL1,+L11,+L13,e^i(0),c(-1)}, {+LL2,+L21,+L22,+L23,e^i(0),c(-1)},
-    {+L11,+L21,+LL11,+L1,e^i(A4),c(1)}, {+L22,+LL21,+LL22,+L2,e^i(A4),c(1)}, {+L13,+L23,+LL32,+L3,e^i(A4),c(1)},
-    {+LL11,+LL21,+LLL1,e^i(0),c(-1)}, {+LL22,+LL32,+LLL2,e^i(0),c(-1)},
-    {+LLL1,e^i(MA4),c(1)}, {+LLL2,e^i(MA4),c(1)}.
-// test. h{+L1,+L2,+L3,e^i(120)}, {+L1,+L2,+L3}.
+  :- int(A), A4 = A/4, MA4 = -A4 |
+  {+LL1,e^i(MA4),c(1)}, {+LL2,e^i(A4),c(1)},
+  {+LL1,+L11,+L13,e^i(0),c(-1)}, {+LL2,+L21,+L22,+L23,e^i(0),c(-1)},
+  {+L11,+L21,+LL11,+L1,e^i(A4),c(1)}, {+L22,+LL21,+LL22,+L2,e^i(A4),c(1)}, {+L13,+L23,+LL32,+L3,e^i(A4),c(1)},
+  {+LL11,+LL21,+LLL1,e^i(0),c(-1)}, {+LL22,+LL32,+LLL2,e^i(0),c(-1)},
+  {+LLL1,e^i(MA4),c(1)}, {+LLL2,e^i(MA4),c(1)}.
+
+// ZH3 rule
 r9_a@@ h{e^i(A),+La,$pa}, h{e^i(B),+Lb,$pb}, {+La,+Lb,+L,e^i(0),c(1)}
-    :- int(A), int(B) | r9{h{e^i(A),$pa}, h{e^i(B),$pb}, ab{+L}}.
+  :- int(A), int(B) | r9{h{e^i(A),$pa}, h{e^i(B),$pb}, ab{+L}}.
 r9_b@@ r9{h{e^i(A),+La,$pa}, h{e^i(B),+Lb,$pb}, ab{$ab}, $q}, {+La,+Lb,+L,e^i(0),c(1)}
-    :- int(A), int(B) | r9{h{e^i(A),$pa}, h{e^i(B),$pb}, ab{$ab,+L}, $q}.
+  :- int(A), int(B) | r9{h{e^i(A),$pa}, h{e^i(B),$pb}, ab{$ab,+L}, $q}.
 r9_c@@ r9{ab{$p}, h{e^i(A)}, h{e^i(B)}} :- int(A), int(B), AB = A+B | h{e^i(AB),$p}.
-// test. h{e^i(30),+La1,+La2,+La3}, h{e^i(90),+Lb1,+Lb2,+Lb3}, {+La1,+Lb1,+L1,e^i(0),c(1)}, 1{+L1}, {+La2,+Lb2,+L2,e^i(0),c(1)}, 2{+L2}, {+La3,+Lb3,+L3,e^i(0),c(1)}, 3{+L3}.
+
 r10@@ {+L1,+L2,e^i(180),c(-1)}, h{+L1,+L3,e^i(A)}, h{+L2,+L4,e^i(B)}, {+L3,+L4,$p,e^i(0),c(1)}
-    :- int(A), int(B), AB2 = (A+B)/2 | h{e^i(AB2),$p}.
-// test. {+L1,+L2,e^i(180),c(-1)}, h{+L1,+L3,e^i(30)}, h{+L2,+L4,e^i(90)}, {+L3,+L4,+LL1,+LL2,e^i(0),c(1)}, {+LL1,+LL2}.
+  :- int(A), int(B), AB2 = (A+B)/2 | h{e^i(AB2),$p}.

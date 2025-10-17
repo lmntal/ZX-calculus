@@ -1,5 +1,0 @@
-// teleportation circuit
-{+I}, {+O},
-{+I,+XX1,+ZX1,e^i(0),c(-1)}, {+XX1,e^i(180),c(-1)},
-{+ZX1,+ZH1,+ZZ1,e^i(0),c(1)}, h{+ZH1,+XH1,e^i(180)}, {+XH1,e^i(180),c(-1)},
-{+ZZ1,+ZX2,e^i(180),c(1)}, {+ZX2,+O,e^i(180),c(-1)}.

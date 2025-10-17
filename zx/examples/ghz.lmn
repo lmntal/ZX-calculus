@@ -1,21 +1,76 @@
-// GHZ-preperaiton circuit
-// 3
-{+Out1, +Out2, +Out3},
+//// GHZ preparation circuit
+// 3 bit
+o{+Out1}, o{+Out2}, o{+Out3},
 {+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
 {+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
 {+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+Out3,e^i(0),c(-1)}.
 
-// 4
-{+Out1, +Out2, +Out3, +Out4},
+// 4 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4},
 {+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
 {+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
 {+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
 {+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+Out4,e^i(0),c(-1)}.
 
-// 5
-{+Out1, +Out2, +Out3, +Out4, +Out5},
+// 5 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4}, o{+Out5},
 {+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
 {+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
 {+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
 {+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+ZX6,e^i(0),c(-1)}, {+ZX6,+ZX7,+Out4,e^i(0),c(1)},
 {+IX4,e^i(0),c(-1)}, {+IX4,+ZX7,+Out5,e^i(0),c(-1)}.
+
+// 6 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4}, o{+Out5}, o{+Out6},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
+{+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+ZX6,e^i(0),c(-1)}, {+ZX6,+ZX7,+Out4,e^i(0),c(1)},
+{+IX4,e^i(0),c(-1)}, {+IX4,+ZX7,+ZX8,e^i(0),c(-1)}, {+ZX8,+ZX9,+Out5,e^i(0),c(1)},
+{+IX5,e^i(0),c(-1)}, {+IX5,+ZX9,+Out6,e^i(0),c(-1)}.
+
+// 7 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4}, o{+Out5}, o{+Out6}, o{+Out7},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
+{+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+ZX6,e^i(0),c(-1)}, {+ZX6,+ZX7,+Out4,e^i(0),c(1)},
+{+IX4,e^i(0),c(-1)}, {+IX4,+ZX7,+ZX8,e^i(0),c(-1)}, {+ZX8,+ZX9,+Out5,e^i(0),c(1)},
+{+IX5,e^i(0),c(-1)}, {+IX5,+ZX9,+ZX10,e^i(0),c(-1)}, {+ZX10,+ZX11,+Out6,e^i(0),c(1)},
+{+IX6,e^i(0),c(-1)}, {+IX6,+ZX11,+Out7,e^i(0),c(-1)}.
+
+// 8 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4}, o{+Out5}, o{+Out6}, o{+Out7}, o{+Out8},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
+{+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+ZX6,e^i(0),c(-1)}, {+ZX6,+ZX7,+Out4,e^i(0),c(1)},
+{+IX4,e^i(0),c(-1)}, {+IX4,+ZX7,+ZX8,e^i(0),c(-1)}, {+ZX8,+ZX9,+Out5,e^i(0),c(1)},
+{+IX5,e^i(0),c(-1)}, {+IX5,+ZX9,+ZX10,e^i(0),c(-1)}, {+ZX10,+ZX11,+Out6,e^i(0),c(1)},
+{+IX6,e^i(0),c(-1)}, {+IX6,+ZX11,+ZX12,e^i(0),c(-1)}, {+ZX12,+ZX13,+Out7,e^i(0),c(1)},
+{+IX7,e^i(0),c(-1)}, {+IX7,+ZX13,+Out8,e^i(0),c(-1)}.
+
+// 9 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4}, o{+Out5}, o{+Out6}, o{+Out7}, o{+Out8}, o{+Out9},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
+{+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+ZX6,e^i(0),c(-1)}, {+ZX6,+ZX7,+Out4,e^i(0),c(1)},
+{+IX4,e^i(0),c(-1)}, {+IX4,+ZX7,+ZX8,e^i(0),c(-1)}, {+ZX8,+ZX9,+Out5,e^i(0),c(1)},
+{+IX5,e^i(0),c(-1)}, {+IX5,+ZX9,+ZX10,e^i(0),c(-1)}, {+ZX10,+ZX11,+Out6,e^i(0),c(1)},
+{+IX6,e^i(0),c(-1)}, {+IX6,+ZX11,+ZX12,e^i(0),c(-1)}, {+ZX12,+ZX13,+Out7,e^i(0),c(1)},
+{+IX7,e^i(0),c(-1)}, {+IX7,+ZX13,+ZX14,e^i(0),c(-1)}, {+ZX14,+ZX15,+Out8,e^i(0),c(1)},
+{+IX8,e^i(0),c(-1)}, {+IX8,+ZX15,+Out9,e^i(0),c(-1)}.
+
+// 10 bit
+o{+Out1}, o{+Out2}, o{+Out3}, o{+Out4}, o{+Out5}, o{+Out6}, o{+Out7}, o{+Out8}, o{+Out9}, o{+Out10},
+{+IH1,e^i(0),c(-1)}, h{+IH1,+ZH1,e^i(180)}, {+ZH1,+ZX1,+Out1,e^i(0),c(1)},
+{+IX1,e^i(0),c(-1)}, {+IX1,+ZX1,+ZX2,e^i(0),c(-1)}, {+ZX2,+ZX3,+Out2,e^i(0),c(1)},
+{+IX2,e^i(0),c(-1)}, {+IX2,+ZX3,+ZX4,e^i(0),c(-1)}, {+ZX4,+ZX5,+Out3,e^i(0),c(1)},
+{+IX3,e^i(0),c(-1)}, {+IX3,+ZX5,+ZX6,e^i(0),c(-1)}, {+ZX6,+ZX7,+Out4,e^i(0),c(1)},
+{+IX4,e^i(0),c(-1)}, {+IX4,+ZX7,+ZX8,e^i(0),c(-1)}, {+ZX8,+ZX9,+Out5,e^i(0),c(1)},
+{+IX5,e^i(0),c(-1)}, {+IX5,+ZX9,+ZX10,e^i(0),c(-1)}, {+ZX10,+ZX11,+Out6,e^i(0),c(1)},
+{+IX6,e^i(0),c(-1)}, {+IX6,+ZX11,+ZX12,e^i(0),c(-1)}, {+ZX12,+ZX13,+Out7,e^i(0),c(1)},
+{+IX7,e^i(0),c(-1)}, {+IX7,+ZX13,+ZX14,e^i(0),c(-1)}, {+ZX14,+ZX15,+Out8,e^i(0),c(1)},
+{+IX8,e^i(0),c(-1)}, {+IX8,+ZX15,+ZX16,e^i(0),c(-1)}, {+ZX16,+ZX17,+Out9,e^i(0),c(1)},
+{+IX9,e^i(0),c(-1)}, {+IX9,+ZX17,+Out10,e^i(0),c(-1)}.

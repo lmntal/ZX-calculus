@@ -1,0 +1,50 @@
+//// All ZX-calculus basic rules in QLMNtal
+
+// definition of Hadamard
+h_def@@ h{e^i(180),+I,+O}
+  :- {e^i(90),c(1),+I,+L1}, {e^i(90),c(-1),+L1,+L2}, {e^i(90),c(1),+L2,+O}.
+
+// spider fusion
+f@@ {+L1,e^i(A),$p1,c(C1)}, {+L1,e^i(B),$p2,c(C2)}
+  :- int(A), int(B), AplusB=A+B, int(C1), int(C2), C1*C2=:=1 |
+  {e^i(AplusB),$p1,$p2,c(C1)}.
+
+// hopf
+hopf@@ {+L1,+L2,+I1,+O1,e^i(A),c(1)}, {+L1,+L2,+I2,+O2,e^i(B),c(-1)}
+  :- int(A), int(B) | {+I1,+O1,e^i(A),c(1)}, {+I2,+O2,e^i(B),c(-1)}.
+
+// hadamard cancellation
+hh@@ h{+L1,+L2,e^i(180)}, h{+L2,+L3,e^i(180)} :- L1=L3.
+
+// identity removal
+id@@ {+L1,+L2,e^i(0),c(C)} :- int(C), C*C=:=1 | L1=L2.
+
+// identity generation
+idgen_g@@ {+L1,$p1}, {+L2,$p2}, idgen_g(N)
+  :- int(N), N>0, NN=N-1 | {+L1,+LL1,$p1}, {+L2,+LL2,$p2}, {+LL1,+LL2,e^i(0),c(1)}, idgen_g(NN).
+idgen_r@@ {+L1,$p1}, {+L2,$p2}, idgen_r(N)
+  :- int(N), N>0, NN=N-1 | {+L1,+LL1,$p1}, {+L2,+LL2,$p2}, {+LL1,+LL2,e^i(0),c(-1)}, idgen_r(NN).
+
+// color change
+h@@ {<*>+L1,e^i(A),c(C)}, <*>h{+L1,+L2,e^i(180)}
+  :- int(A), int(C), CC=-C | {<*>+L2,e^i(A),c(CC)}.
+
+// pi commutation
+pi@@ {+L1,+L2,e^i(180),c(C1)}, {+L2,<*>+L3,e^i(A),c(C2)}
+  :- int(A), AA=-A, int(C1), int(C2), C1*C2=:=-1 | {+L1,<*>+L2,e^i(AA),c(C2)}, <*>{+L2,+L3,e^i(180),c(C1)}.
+
+// copy
+c@@ {+L1,e^i(0),c(C1)},{+L1, <*>+L2,e^i(A),c(C2)}
+  :- int(A), int(C1), int(C2), C1*C2=:=-1 | <*>{+L2,e^i(0),c(C1)}.
+
+// bialgebra complementation
+b@@ {M<*>+L1,+L2,e^i(0),c(1)}, {+L2,N<*>+L3,e^i(0),c(-1)}
+  :- M<*>{+L1,N<*>+L2,e^i(0),c(-1)}, N<*>{M<*>+L2,+L3,e^i(0),c(1)}.
+
+{
+  // these rules are treated as taking 0 step
+  system_ruleset. '$callback'(zerostep).
+  {+'+', $p} :- {$p}.
+  {e^i(A),$p} :- A>=360, AA=A-360 | {e^i(AA),$p}.
+  {e^i(A),$p} :- A<0,    AA=A+360 | {e^i(AA),$p}.
+}.
