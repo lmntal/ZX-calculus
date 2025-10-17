@@ -4,10 +4,8 @@
 {e^i(0),c(-1),+L331}, h{e^i(180),+L331,+L332},  {e^i(90),c(1),+L332,+L333}, {e^i(0),c(1),+L333,+L341,+L334}, {e^i(0),c(-1),+L334,+L131,+L335}, {e^i(0),c(1),+L335,+L231,+L336}, {e^i(0),c(-1),+L336,+L342,+L337}, {e^i(0),c(-1),+L337,+L132,+L338}, out3(L338),
 {e^i(0),c(-1),+L441}, {e^i(0),c(-1),+L441,+L341,+L442}, {e^i(0),c(-1),+L442,+L241,+L443}, {e^i(0),c(1),+L443,+L242,+L444}, {e^i(0),c(1),+L444,+L342,+L445}, {e^i(0),c(1),+L445,+L243,+L446}, out4(L446).
 use_rules=[h1,c,c,fg0,ast2,f,hopf,ast3].
-use_rules=[f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f], use_rules=[id,id,id,id,id], use_rules=[hopf,hopf].
-
-// out1(L6). out2(L4). out3(L7). out4(L5). {c(1). '^'(e,i(90)). +L5. +L1. +L3. +L6. +L7. }, {c(-1). '^'(e,i(0)). +L2. +L3. +L4. }, {c(1). '^'(e,i(90)). +L0. +L2. }, h{'^'(e,i(180)). +L1. +L0. }.
-// use_rules=[fg0,ast2,f,hopf,ast3].
+use_rules=[f,f,f,f,f,f,f,f],
+use_rules=[id,id,id,id,id], use_rules=[hopf,hopf].
 
 //// additional rules
 ast1@@ use_rules=[ast1|R], h{+L1,+L2,e^i(180)}, {e^i(A),c(C),+L1,+L2,$p}
@@ -99,9 +97,10 @@ b_i@@ b{left{{+R,e^i(0),c(-1)},$r}, right{$w,to}, right{}, bg{$bg}, {e^i(0),c(-1
 b_j@@ b{left{}, right{$w,to}, right{}, bg{$bg}, $q} :- $w, $bg, $q.
 
 {
-  // these rules are treated as takinig 0 step
+  // these rules are treated as takinig 0 steps
   system_ruleset. '$callback'(zerostep).
   {+'+', $p} :- {$p}.
   {e^i(A),$p} :- A>=360, AA=A-360 | {e^i(AA),$p}.
   {e^i(A),$p} :- A<0,    AA=A+360 | {e^i(AA),$p}.
+  b_times(0) :- . pi_times(0) :- . idgen_r(0) :- . idgen_g(0) :- .
 }.
